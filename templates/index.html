@@ -1,0 +1,217 @@
+{% extends "base.html" %} {% block content %} {% include
+"components/navbar.html" %}
+
+<!-- Jumbotron -->
+<section
+  class="bg-center bg-no-repeat bg-contain md:bg-cover bg-dark-soft bg-blend-multiply bg-[url('/static/img/jumbotron.jpg')]"
+>
+  <div class="px-4 md:ml-5 mx-auto max-w-screen-7xl text-start py-30 lg:py-40">
+    <div class="text-start max-w-3xl">
+      <h1
+        class="mb-6 text-4xl font-bold tracking-tighter text-white md:text-5xl lg:text-6xl"
+      >
+        Discover the Right Candidate <br />
+        with AI Intelligence
+      </h1>
+      <p class="mb-8 text-base font-normal text-white md:text-xl">
+        Smart Recruit analyzes and classifies candidates based on skills,
+        experience, and professional background with high accuracy and
+        efficiency.
+      </p>
+    </div>
+    <div
+      class="flex flex-col space-y-4 sm:flex-row sm:justify-start sm:space-y-0 md:space-x-4"
+    >
+      <a
+        href="{{url_for('assistant')}}"
+        class="inline-flex items-center justify-center text-white bg-second-color hover:bg-third-color box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium rounded-base text-base px-5 py-3 focus:outline-none"
+      >
+        Find Candidate
+        <ion-icon name="people-circle-outline" class="ml-2 text-xl"></ion-icon>
+      </a>
+      <a
+        href="#about"
+        class="text-second-color bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-base px-5 py-4 focus:outline-none"
+      >
+        Learn More
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about" class="mt-20 mb-10 mx-auto">
+  <h1 class="font-normal text-3xl text-center text-main-color">About Us</h1>
+
+  <div
+    class="flex flex-wrap flex-row justify-center items-center mb-10 mt-10 px-6 md:justify-around md:mx-7 md:px-0"
+  >
+    <div class="w-2xl order-2 md:order-0">
+      <p class="text-justify leading-relaxed text-base">
+        Smart Recruit is an AI-powered recruitment platform designed to help
+        companies identify the right tech talent quickly and accurately.
+        Traditional recruitment relies heavily on manual screening, which can be
+        time-consuming, subjective, and inefficient especially when evaluating
+        candidates with similar backgrounds.
+        <br /><br />
+        Smart Recruit transforms this process through intelligent
+        classification. By analyzing a candidate’s skills, certifications,
+        education, experience, and projects, the system predicts the most
+        suitable job role such as Data Scientist, Cybersecurity Engineer, or AI
+        Engineer.
+        <br /><br />
+        Our mission is to support recruiters in making smarter and more
+        objective hiring decisions. With Smart Recruit, companies can streamline
+        the candidate evaluation process, reduce screening time, and increase
+        the accuracy of hiring all through the power of data-driven insights.
+      </p>
+    </div>
+    <div class="text-center md:mr-10">
+      <img
+        src="{{ url_for('static', filename='img/logo.png') }}"
+        class="size-80 rounded-full md:size-90"
+        alt="Smart Recruit Logo"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- Category -->
+<section id="category" class="mt-40 mb-30 mx-auto">
+  <h1 class="font-normal text-3xl text-center text-main-color">Category</h1>
+
+  <div
+    class="flex flex-wrap flex-row justify-center items-center gap-x-30 gap-y-20 mb-10 mt-10 px-6 md:mx-7 md:px-0"
+  >
+    <!-- Card data science -->
+    <div class="bg-main-color block max-w-sm border-b rounded-base shadow-xs">
+      <a href="{{url_for('candidate')}}">
+        <img
+          class="rounded-t-base size-80 object-cover"
+          src="{{ url_for('static', filename='img/data-science.jpg') }}"
+          alt="data-science image"
+        />
+      </a>
+      <div class="p-4 text-center">
+        <a href="{{url_for('candidate')}}">
+          <h5
+            class="mt-3 mb-6 text-2xl font-semibold tracking-tight text-white"
+          >
+            Data Science
+          </h5>
+        </a>
+        <a
+          href="{{url_for('candidate')}}"
+          class="inline-flex items-center text-white bg-second-color border border-transparent hover:bg-third-color focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+        >
+          View More
+          <svg
+            class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 12H5m14 0-4 4m4-4-4-4"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Card AI -->
+    <div class="bg-main-color block max-w-sm border-b rounded-base shadow-xs">
+      <a href="{{url_for('candidate')}}">
+        <img
+          class="rounded-t-base size-80 object-cover"
+          src="{{ url_for('static', filename='img/AI.jpg') }}"
+          alt="AI image"
+        />
+      </a>
+      <div class="p-4 text-center">
+        <a href="{{url_for('candidate')}}">
+          <h5
+            class="mt-3 mb-6 text-2xl font-semibold tracking-tight text-white"
+          >
+            Artificial Intelligence
+          </h5>
+        </a>
+        <a
+          href="{{url_for('candidate')}}"
+          class="inline-flex items-center text-white bg-second-color border border-transparent hover:bg-third-color focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+        >
+          View More
+          <svg
+            class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 12H5m14 0-4 4m4-4-4-4"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Card Cybersecurity -->
+    <div class="bg-main-color block max-w-sm border-b rounded-base shadow-xs">
+      <a href="{{url_for('candidate')}}">
+        <img
+          class="rounded-t-base size-80 object-cover"
+          src="{{ url_for('static', filename='img/Cybersecurity.jpg') }}"
+          alt="Cybersecurity image"
+        />
+      </a>
+      <div class="p-4 text-center">
+        <a href="{{url_for('candidate')}}">
+          <h5
+            class="mt-3 mb-6 text-2xl font-semibold tracking-tight text-white"
+          >
+            Cybersecurity
+          </h5>
+        </a>
+        <a
+          href="{{url_for('candidate')}}"
+          class="inline-flex items-center text-white bg-second-color border border-transparent hover:bg-third-color focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+        >
+          View More
+          <svg
+            class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 12H5m14 0-4 4m4-4-4-4"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "components/footer.html" %} {% endblock %}

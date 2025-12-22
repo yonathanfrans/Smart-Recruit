@@ -1,0 +1,595 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- hamburger menu -->
+<button
+  data-drawer-target="logo-sidebar"
+  data-drawer-toggle="logo-sidebar"
+  aria-controls="logo-sidebar"
+  type="button"
+  class="text-main-color bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base ms-3 mt-3 text-sm p-2 focus:outline-none inline-flex sm:hidden"
+>
+  <span class="sr-only">Open sidebar</span>
+  <ion-icon name="menu-outline" class="size-7"></ion-icon>
+</button>
+
+<!-- sidebar  -->
+<aside
+  id="logo-sidebar"
+  class="fixed top-0 left-0 z-40 w-70 h-full transition-transform -translate-x-full sm:translate-x-0"
+  aria-label="Sidebar"
+>
+  <div class="h-full px-3 py-10 overflow-y-auto bg-main-color border-e">
+    <!-- Logo -->
+    <a href="/" class="flex items-center ps-2 mb-15">
+      <img
+        src="{{ url_for('static',filename='img/logo.png') }}"
+        class="size-12 me-5 rounded-full"
+        alt="Flowbite Logo"
+      />
+      <span
+        class="self-center text-xl text-white font-semibold whitespace-nowrap"
+        >Smart Recruit</span
+      >
+    </a>
+    <ul class="space-y-4 font-medium text-lg">
+      <li>
+        <a
+          href="#profileData"
+          class="sidebar-link flex items-center px-2 py-1.5 text-second-color bg-neutral-tertiary rounded-base hover:bg-neutral-tertiary hover:text-second-color group"
+        >
+          <ion-icon
+            name="person-sharp"
+            class="size-6 transition duration-75 group-hover:text-second-color"
+          ></ion-icon>
+          <span class="ms-5">Profile Data</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href="#jobRole"
+          class="sidebar-link flex items-center px-2 py-1.5 text-white rounded-base hover:bg-neutral-tertiary hover:text-second-color group"
+        >
+          <ion-icon
+            name="business-sharp"
+            class="size-6 transition duration-75 group-hover:text-second-color"
+          ></ion-icon>
+          <span class="ms-5">Job Role</span>
+        </a>
+      </li>
+      <hr class="border border-white mx-auto my-10" />
+      <li>
+        <a
+          href="/"
+          class="flex items-center px-2 py-1.5 text-white rounded-base hover:bg-neutral-tertiary hover:text-second-color group"
+        >
+          <ion-icon
+            name="home-sharp"
+            class="size-6 transition duration-75 group-hover:text-second-color"
+          ></ion-icon>
+          <span class="ms-5">Back to Home Page</span>
+        </a>
+      </li>
+      <li>
+        <button
+          type="button"
+          class="flex items-center w-full px-2.5 py-1.5 text-white rounded-base hover:bg-neutral-tertiary hover:text-second-color group"
+        >
+          <ion-icon
+            name="log-out-sharp"
+            class="size-6 transition duration-75 group-hover:text-second-color"
+          ></ion-icon>
+          <span class="ms-5">Logout</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</aside>
+
+<!-- Content -->
+<main class="p-4 sm:ml-74">
+  <!-- section profile data -->
+  <section id="profileData" class="p-4">
+    <!-- title -->
+    <div class="font-normal text-center mt-8">
+      <h1 class="text-3xl text-main-color">Profile Data</h1>
+      <h3 class="text-base text-third-color">
+        Fill in and update your personal details in the form below.
+      </h3>
+    </div>
+    <!-- Form profile data -->
+    <form
+      action="#"
+      class="flex flex-wrap flex-row justify-center md:justify-around gap-x-10 border-0 border-third-color rounded-base bg-gray-100 md:m-10 mt-5 p-5"
+    >
+      <!-- Input image profile & Status -->
+      <div
+        class="relative flex flex-col flex-wrap h-min p-3 gap-y-4 mb-4 items-center"
+      >
+        <!-- input image -->
+        <img
+          class="size-50 rounded-full"
+          src="{{ url_for('static', filename='img/user-profile.jpg') }}"
+          alt="Rounded profile"
+        />
+        <input
+          class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-second-color text-sm rounded-base focus:ring-second-color focus:border-second-color block w-fit shadow-xs placeholder:text-third-color"
+          aria-describedby="file_input_help"
+          id="image_profile"
+          name="image_profile"
+          type="file"
+          accept=".jpg,.png,.jpeg"
+        />
+        <p class="text-sm text-third-color">
+          Only allowed (PNG, JPG, or JPEG).
+        </p>
+        <!-- input status -->
+        <div class="w-full">
+          <label
+            for="status"
+            class="block mb-2.5 text-sm font-medium text-second-color"
+            >Select your status
+          </label>
+          <select
+            id="status"
+            name="status"
+            class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-sm focus:ring-third-color focus:border-third-color shadow-xs placeholder:text-third-color"
+          >
+            <option selected disabled>Choose a status</option>
+            <option value="Unemployed">Unemployed</option>
+            <option value="Employed">Employed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex flex-col flex-wrap px-3 w-2xl">
+        <!-- Profile bio -->
+        <h3 class="my-3 text-lg text-second-color">Profile Bio</h3>
+        <div class="grid gap-6 mb-6 mt-2 md:grid-cols-2">
+          <!-- Input first name -->
+          <div>
+            <label
+              for="first_name"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >First name</label
+            >
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+              placeholder="Your first name"
+              required
+            />
+          </div>
+          <!-- Input last name -->
+          <div>
+            <label
+              for="last_name"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Last name</label
+            >
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+              placeholder="Your last name"
+              required
+            />
+          </div>
+          <!-- Input birthdate -->
+          <div>
+            <label
+              for="birthdate"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Birthdate</label
+            >
+            <input
+              type="date"
+              id="birthdate"
+              name="birthdate"
+              class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+              required
+            />
+          </div>
+          <!-- Input username -->
+          <div>
+            <label
+              for="username"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Username</label
+            >
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+              placeholder="yourusername"
+              required
+            />
+          </div>
+          <!-- Input address -->
+          <div class="md:col-span-2">
+            <label
+              for="address"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Address</label
+            >
+            <textarea
+              id="address"
+              name="address"
+              rows="4"
+              class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+              placeholder="Your address"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <h3 class="my-3 text-lg text-second-color">Contact</h3>
+        <div class="grid gap-6 mb-6 mt-2 md:grid-cols-2">
+          <!-- Input phone number -->
+          <div>
+            <label
+              for="phone_number"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Phone number</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+              >
+                <ion-icon
+                  name="call-outline"
+                  class="size-4 text-third-color"
+                ></ion-icon>
+              </div>
+              <input
+                type="tel"
+                name="phone_number"
+                id="phone_number"
+                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                inputmode="numeric"
+                minlength="9"
+                maxlength="13"
+                class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full ps-10 pe-3 py-3 shadow-xs placeholder:text-third-color"
+                placeholder="123 45 678"
+                required
+              />
+            </div>
+          </div>
+          <!-- Input email -->
+          <div>
+            <label
+              for="email"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Email</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+              >
+                <ion-icon
+                  name="mail-outline"
+                  class="size-4 text-third-color"
+                ></ion-icon>
+              </div>
+              <input
+                type="email"
+                id="email-user"
+                name="email"
+                class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full ps-10 pe-3 py-3 shadow-xs placeholder:text-third-color"
+                placeholder="youremail@mail.com"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Media -->
+        <h3 class="my-3 text-lg text-second-color">Social Media</h3>
+        <div class="grid gap-6 mb-6 mt-2 md:grid-cols-2">
+          <!-- Input instagram -->
+          <div>
+            <label
+              for="instagram"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Instagram</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+              >
+                <ion-icon
+                  name="logo-instagram"
+                  class="size-4 text-third-color"
+                ></ion-icon>
+              </div>
+              <input
+                type="text"
+                name="instagram"
+                id="instagram"
+                class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full ps-10 pe-3 py-3 shadow-xs placeholder:text-third-color"
+                placeholder="@yourinstagram"
+                required
+              />
+            </div>
+          </div>
+          <!-- Input github -->
+          <div>
+            <label
+              for="github"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Github</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+              >
+                <ion-icon
+                  name="logo-github"
+                  class="size-4 text-third-color"
+                ></ion-icon>
+              </div>
+              <input
+                type="text"
+                name="github"
+                id="github"
+                class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full ps-10 pe-3 py-3 shadow-xs placeholder:text-third-color"
+                placeholder="@yourgithub"
+                required
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Button Submit -->
+      <button
+        type="submit"
+        class="size-max text-white bg-second-color box-border border border-transparent hover:bg-third-color focus:ring-4 focus:ring-third-color shadow-xs font-medium leading-5 rounded-base text-base px-7 py-2.5 mx-auto my-2 mt-10 focus:outline-none"
+      >
+        Save
+      </button>
+    </form>
+  </section>
+
+  <!-- section job role -->
+  <section id="jobRole" class="p-4 mt-20">
+    <!-- title -->
+    <div class="font-normal text-center mt-8">
+      <h1 class="text-3xl text-main-color">Job Role</h1>
+      <h3 class="text-base text-third-color">
+        Fill out this form to find out your job role.
+      </h3>
+    </div>
+    <!-- Form job role -->
+    <form
+      action="#"
+      class="flex flex-col justify-center flex-wrap border-0 border-third-color rounded-base bg-gray-100 md:m-10 mt-5 px-10 py-5"
+    >
+      <div class="flex flex-col flex-wrap">
+        <!-- Skills & Education -->
+        <h3 class="my-3 text-lg text-second-color">Skills & Education</h3>
+        <div class="grid gap-6 mb-6 mt-2 lg:grid-cols-2">
+          <!-- Input skills -->
+          <div>
+            <label
+              for="skills"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Your Skills</label
+            >
+            <input
+              type="text"
+              id="skills"
+              name="skills"
+              class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+              placeholder="Python, Networking, Linux, etc.."
+              required
+            />
+          </div>
+          <!-- Input education -->
+          <div>
+            <label
+              for="education"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Your Education</label
+            >
+            <input
+              type="text"
+              id="education"
+              name="education"
+              class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-min px-4 py-3 shadow-xs placeholder:text-third-color"
+              placeholder="B.Tech, PhD, or other degrees.."
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <h3 class="my-3 text-lg text-second-color">Certifications</h3>
+        <div class="grid gap-6 mb-6 mt-2 lg:grid-cols-2">
+          <!-- Input certifications -->
+          <div>
+            <label
+              for="certifications"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Your Certifications</label
+            >
+            <input
+              type="text"
+              id="certifications"
+              name="certifications"
+              class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+              placeholder="Google ML, AWS Certified, etc.."
+              required
+            />
+          </div>
+          <!-- Input file certifications -->
+          <div>
+            <label
+              for="file_certifications"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Upload File Certifications</label
+            >
+            <input
+              type="file"
+              id="file_certifications"
+              name="file_certifications"
+              class="cursor-pointer bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-fit shadow-xs placeholder:text-third-color"
+              accept=".pdf"
+              multiple
+              required
+            />
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">
+              Upload files in PDF format only.
+            </p>
+          </div>
+        </div>
+
+        <!-- Experience -->
+        <h3 class="my-3 text-lg text-second-color">Experience</h3>
+        <div class="grid gap-6 mb-6 mt-2 lg:grid-cols-2">
+          <!-- Input experience -->
+          <div>
+            <label
+              for="experience"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Your experience</label
+            >
+            <textarea
+              id="experience"
+              name="experience"
+              rows="4"
+              maxlength="600"
+              class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+              placeholder="Tell us about your work experience.."
+            ></textarea>
+          </div>
+          <!-- Input experience years -->
+          <div>
+            <label
+              for="experience_years"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Enter years of work experience:</label
+            >
+            <div class="relative flex items-center">
+              <button
+                type="button"
+                id="decrement-button"
+                data-input-counter-decrement="experience_years"
+                class="bg-neutral-secondary-medium box-border border border-second-color hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-1 focus:ring-third-color font-medium leading-5 rounded-s-base text-sm pt-1 px-2 focus:outline-none h-10"
+              >
+                <ion-icon
+                  name="remove-outline"
+                  class="size-4 text-second-color"
+                ></ion-icon>
+              </button>
+              <input
+                type="text"
+                id="experience_years"
+                data-input-counter
+                data-input-counter-min="0"
+                data-input-counter-max="10"
+                aria-describedby="helper-text-explanation"
+                class="border-x-0 h-10 text-second-color text-center w-10 bg-neutral-secondary-medium border-second-color py-2.5 placeholder:text-third-color"
+                value="0"
+                disabled
+                required
+              />
+              <button
+                type="button"
+                id="increment-button"
+                data-input-counter-increment="experience_years"
+                class="bg-neutral-secondary-medium box-border border border-second-color hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-1 focus:ring-third-color font-medium leading-5 rounded-e-base text-sm pt-1 px-2 focus:outline-none h-10"
+              >
+                <ion-icon
+                  name="add-outline"
+                  class="size-4 text-second-color"
+                ></ion-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects -->
+        <h3 class="my-3 text-lg text-second-color">Projects</h3>
+        <div class="grid gap-6 mb-6 mt-2 lg:grid-cols-2">
+          <!-- Input projects -->
+          <div>
+            <label
+              for="projects"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Your Projects</label
+            >
+            <textarea
+              id="projects"
+              name="projects"
+              rows="4"
+              maxlength="600"
+              class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+              placeholder="Describe the projects you have worked on."
+            ></textarea>
+          </div>
+          <!-- Input projects count -->
+          <div>
+            <label
+              for="projects_count"
+              class="block mb-2.5 text-sm font-medium text-second-color"
+              >Enter the number of your projects:</label
+            >
+            <div class="relative flex items-center">
+              <button
+                type="button"
+                id="decrement-button"
+                data-input-counter-decrement="projects_count"
+                class="bg-neutral-secondary-medium box-border border border-second-color hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-1 focus:ring-third-color font-medium leading-5 rounded-s-base text-sm pt-1 px-2 focus:outline-none h-10"
+              >
+                <ion-icon
+                  name="remove-outline"
+                  class="size-4 text-second-color"
+                ></ion-icon>
+              </button>
+              <input
+                type="text"
+                id="projects_count"
+                data-input-counter
+                data-input-counter-min="0"
+                data-input-counter-max="10"
+                aria-describedby="helper-text-explanation"
+                class="border-x-0 h-10 text-second-color text-center w-10 bg-neutral-secondary-medium border-second-color py-2.5 placeholder:text-third-color"
+                value="0"
+                disabled
+                required
+              />
+              <button
+                type="button"
+                id="increment-button"
+                data-input-counter-increment="projects_count"
+                class="bg-neutral-secondary-medium box-border border border-second-color hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-1 focus:ring-third-color font-medium leading-5 rounded-e-base text-sm pt-1 px-2 focus:outline-none h-10"
+              >
+                <ion-icon
+                  name="add-outline"
+                  class="size-4 text-second-color"
+                ></ion-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Job Role -->
+        <h3 class="my-3 text-lg text-second-color">
+          Job Role: <span class="text-green-400">...</span>
+        </h3>
+      </div>
+      <!-- Button Submit -->
+      <button
+        type="submit"
+        class="w-max text-white bg-second-color box-border border border-transparent hover:bg-third-color focus:ring-4 focus:ring-third-color shadow-xs font-medium leading-5 rounded-base text-base px-7 py-2.5 mx-auto my-2 mt-10 focus:outline-none"
+      >
+        Submit
+      </button>
+    </form>
+  </section>
+</main>
+
+{% endblock %}

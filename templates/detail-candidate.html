@@ -1,0 +1,192 @@
+{% extends "base.html" %} {% block content %} {% include
+"components/navbar.html" %}
+
+<section class="mt-30 mb-10 mx-auto">
+  <!-- Header Profile -->
+  <div
+    class="flex flex-row flex-wrap items-center justify-around m-2 py-3 mb-10"
+  >
+    <!-- Profile Candidate -->
+    <img
+      class="size-60 rounded-full"
+      src="{{ url_for('static', filename='img/user-profile.jpg') }}"
+      alt="Rounded profile"
+    />
+    <div class="flex flex-col items-center gap-y-5">
+      <!-- Name Candidate -->
+      <h2 class="font-bold text-3xl text-main-color">John Doe</h2>
+      <span class="font-medium text-2xl text-second-color"
+        >Looking for a job as a
+        <span class="font-semibold text-fourth-color"
+          >Data Scientist</span
+        ></span
+      >
+      <!-- Social Media -->
+      <div class="flex flex-row gap-x-15">
+        <a href="#">
+          <ion-icon
+            name="logo-instagram"
+            class="size-7 text-pink-500"
+          ></ion-icon>
+        </a>
+        <a href="#">
+          <ion-icon name="logo-github" class="size-7"></ion-icon>
+        </a>
+        <a href="#">
+          <ion-icon name="mail-outline" class="size-7 text-red-700"></ion-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Candidate Information -->
+  <div class="flex flex-row flex-wrap justify-around m-2 py-3 px-10 gap-y-10">
+    <!-- Personal Details -->
+    <div
+      class="border-2 border-gray-300 rounded-base shadow-md shadow-third-color p-3 w-lg h-fit"
+    >
+      <!-- title -->
+      <div class="flex flex-wrap flex-col justify-start mx-3">
+        <h2 class="font-semibold text-lg text-main-color">My Information</h2>
+        <h3 class="font-light text-sm text-third-color">Personal details</h3>
+      </div>
+      <hr class="my-3 text-third-color" />
+      <!-- content -->
+      <div class="grid grid-cols-2 my-4 mx-3 gap-y-8 gap-x-5 md:gap-x-0">
+        <!-- Birthdate -->
+        <div class="flex flex-wrap flex-col text-sm">
+          <h3 class="text-third-color">Birthdate</h3>
+          <h4 class="text-main-color">04 December 2025</h4>
+        </div>
+        <!-- Education -->
+        <div class="flex flex-wrap flex-col text-sm">
+          <h3 class="text-third-color">Education</h3>
+          <h4 class="text-main-color">M.Tech</h4>
+        </div>
+        <!-- Email -->
+        <div class="flex flex-wrap flex-col text-sm">
+          <h3 class="text-third-color">Email Address</h3>
+          <h4 class="text-main-color">youremail@mail.com</h4>
+        </div>
+        <!-- Phone Number -->
+        <div class="flex flex-wrap flex-col text-sm">
+          <h3 class="text-third-color">Phone Number</h3>
+          <h4 class="text-main-color">123 45 678</h4>
+        </div>
+        <!-- address -->
+        <div class="flex flex-wrap flex-col text-sm col-span-2">
+          <h3 class="text-third-color">Address</h3>
+          <p class="text-main-color">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi
+            soluta corporis, eveniet officiis, qui voluptas accusantium quos
+            dolor veritatis corrupti expedita sit mollitia! Fuga sunt laborum
+            officia, exercitationem quidem quas. Nihil nulla eaque nisi debitis,
+            corrupti ducimus
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills & Projects -->
+    <div
+      class="border-2 border-gray-300 rounded-base shadow-md shadow-third-color p-3 w-lg h-fit"
+    >
+      <!-- title -->
+      <div class="flex flex-wrap flex-col justify-start mx-3">
+        <h2 class="font-semibold text-lg text-main-color">
+          My Skills & Projects
+        </h2>
+        <h3 class="font-light text-sm text-third-color">
+          Hard skills / Technical skills and projects
+        </h3>
+      </div>
+      <hr class="my-3 text-third-color" />
+      <!-- Content -->
+      <div class="flex flex-col flex-wrap gap-y-8 my-4 mx-3">
+        <!-- Skills -->
+        <div class="flex flex-wrap flex-col text-sm">
+          <h3 class="text-third-color">My Skills</h3>
+          <p class="text-main-color">
+            Python, Machine Learning, Laravel, Tailwind
+          </p>
+        </div>
+        <!-- Projects -->
+        <div class="flex flex-wrap flex-col text-sm">
+          <h3 class="text-third-color">My Projects</h3>
+          <p class="text-main-color">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
+            quas quis nobis sapiente, saepe cupiditate quam alias incidunt, sunt
+            soluta architecto maiores maxime consectetur perferendis quia non
+            quo aperiam hic. Nam, ratione. Nostrum officia pariatur vero ducimus
+            adipisci magnam dicta sed. Quibusdam accusantium neque aperiam
+            recusandae officia. Recusandae provident voluptates, maiores vero
+            natus ullam, illum, nesciunt nihil sequi voluptatum magni.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience & Certifications -->
+    <div
+      class="border-2 border-gray-300 rounded-base shadow-md shadow-third-color p-3 w-lg h-fit"
+    >
+      <!-- title -->
+      <div class="flex flex-wrap flex-col justify-start mx-3">
+        <h2 class="font-semibold text-lg text-main-color">
+          My Experience & Certifications
+        </h2>
+        <h3 class="font-light text-sm text-third-color">
+          Experience and certifications acquired so far
+        </h3>
+      </div>
+      <hr class="my-3 text-third-color" />
+      <!-- Content -->
+      <div class="flex flex-col flex-wrap gap-y-5 my-4 mx-3">
+        <!-- Experience Years -->
+        <div class="flex flex-wrap flex-col text-sm">
+          <h3 class="text-third-color">Experience</h3>
+          <span class="text-main-color"> 4 Years </span>
+        </div>
+        <!-- Detail Experience-->
+        <div class="flex flex-wrap flex-col text-sm">
+          <h3 class="text-third-color">Detail Experience</h3>
+          <p class="text-main-color">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facere eum
+            beatae error repellat rerum illum maiores facilis architecto
+            necessitatibus placeat doloremque nihil consequatur, nisi illo. Est
+            distinctio quisquam officiis blanditiis. Possimus nisi officia aut
+            adipisci placeat impedit temporibus porro eaque eos! Deleniti
+            facere, perspiciatis sit ratione modi assumenda sapiente praesentium
+            soluta cumque vel quam esse similique iure sunt quisquam ut.
+          </p>
+        </div>
+        <!-- Certifcations -->
+        <div class="flex flex-wrap flex-col text-sm">
+          <h3 class="text-third-color">My Certifications</h3>
+          <p class="text-main-color">Google ML, AWS Certified</p>
+        </div>
+        <!-- File Certifcations -->
+        <div class="flex flex-wrap flex-col text-sm">
+          <h3 class="text-third-color">File Certifications</h3>
+          <div class="flex justify-between border-2 border-gray-200 p-2">
+            <div class="flex items-center gap-x-2">
+              <ion-icon
+                name="attach-outline"
+                class="size-5 text-third-color"
+              ></ion-icon>
+              <p class="text-main-color">google-ml.pdf</p>
+            </div>
+            <div
+              class="flex items-center gap-x-2 cursor-pointer text-third-color hover:text-main-color hover:underline"
+            >
+              <ion-icon name="eye-outline" class="size-5"></ion-icon>
+              <span>View</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "components/footer.html" %} {% endblock %}

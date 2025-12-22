@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block content %} {% include
+"components/navbar.html" %}
+
+<!-- Your Assistant -->
+<section class="mt-40 mb-10 mx-auto">
+  <!-- title -->
+  <div class="font-normal text-center">
+    <h1 class="text-3xl text-main-color">Your Assistant</h1>
+    <h3 class="text-base text-third-color">
+      Your AI assistant to help you find the right candidates based on skills,
+      experience, and job requirements.
+    </h3>
+  </div>
+
+  <!-- content -->
+  <div
+    class="flex flex-wrap flex-row justify-center items-center mb-10 mt-10 px-6 md:justify-around md:mx-7 md:px-0"
+  ></div>
+</section>
+{% include "components/footer.html" %} {% endblock %}

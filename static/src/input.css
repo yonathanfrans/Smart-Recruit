@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+@import "flowbite/src/themes/default";
+
+@plugin "flowbite/plugin";
+
+@source "../../node_modules/flowbite";
+
+@theme {
+  --color-main-color: #2D3250;
+  --color-second-color: #424769;
+  --color-third-color: #7077A1;
+  --color-fourth-color: #F6B17A;
+
+  --font-main: "Bree Serif", serif;
+}

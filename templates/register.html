@@ -1,0 +1,218 @@
+{% extends "base.html" %} {% block content %} {% include
+"components/navbar.html" %}
+<!-- Register -->
+<section class="mt-30 mb-10 mx-auto">
+  <!-- title -->
+  <div class="font-normal text-center">
+    <h1 class="text-3xl text-main-color">Register Here</h1>
+    <h3 class="text-base text-third-color">
+      Fill these form below if you as candidate to show off yourself to
+      recruiters
+    </h3>
+  </div>
+  <!-- Form Register -->
+  <form
+    action="#"
+    class="flex flex-wrap flex-row justify-center md:justify-around gap-x-10 border border-third-color rounded-base bg-gray-200 m-10 p-10"
+  >
+    <!-- Input image profile -->
+    <div class="flex flex-col flex-wrap h-min p-3 gap-y-4 items-center">
+      <img
+        class="size-50 rounded-full"
+        src="{{ url_for('static', filename='img/user-profile.jpg') }}"
+        alt="Rounded profile"
+      />
+      <input
+        class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-second-color text-sm rounded-base focus:ring-second-color focus:border-second-color block w-fit shadow-xs placeholder:text-third-color"
+        aria-describedby="file_input_help"
+        id="image_profile"
+        name="image"
+        type="file"
+        accept=".jpg,.png,.jpeg"
+      />
+      <p class="m-2 text-sm text-third-color" id="file_input_help">
+        Only allowed (PNG, JPG, or JPEG).
+      </p>
+    </div>
+
+    <div class="flex flex-col flex-wrap px-3 w-2xl">
+      <!-- Profile bio -->
+      <h3 class="my-3 text-lg text-second-color">Profile Bio</h3>
+      <div class="grid gap-6 mb-6 mt-2 md:grid-cols-2">
+        <!-- Input first name -->
+        <div>
+          <label
+            for="first_name"
+            class="block mb-2.5 text-sm font-medium text-second-color"
+            >First name</label
+          >
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+            placeholder="Your first name"
+            required
+          />
+        </div>
+        <!-- Input last name -->
+        <div>
+          <label
+            for="last_name"
+            class="block mb-2.5 text-sm font-medium text-heading"
+            >Last name</label
+          >
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+            placeholder="Your last name"
+            required
+          />
+        </div>
+        <!-- Input birthdate -->
+        <div>
+          <label
+            for="birthdate"
+            class="block mb-2.5 text-sm font-medium text-heading"
+            >Birthdate</label
+          >
+          <input
+            type="date"
+            id="birthdate"
+            name="birthdate"
+            class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <h3 class="my-3 text-lg text-second-color">Contact</h3>
+      <div class="grid gap-6 mb-6 mt-2 md:grid-cols-2">
+        <!-- Input phone number -->
+        <div>
+          <label
+            for="phone_number"
+            class="block mb-2.5 text-sm font-medium text-second-color"
+            >Phone number</label
+          >
+          <input
+            type="tel"
+            name="phone_number"
+            id="phone_number"
+            pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+            inputmode="numeric"
+            minlength="9"
+            maxlength="13"
+            class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+            placeholder="123 45 678"
+            required
+          />
+        </div>
+        <!-- Input email -->
+        <div>
+          <label
+            for="email"
+            class="block mb-2.5 text-sm font-medium text-heading"
+            >Email</label
+          >
+          <input
+            type="email"
+            id="email-user"
+            name="email"
+            class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+            placeholder="youremail@mail.com"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Credential -->
+      <h3 class="my-3 text-lg text-second-color">Credential</h3>
+      <div class="grid gap-6 mb-6 mt-2 md:grid-cols-2">
+        <!-- Input username -->
+        <div>
+          <label
+            for="username"
+            class="block mb-2.5 text-sm font-medium text-second-color"
+            >Username</label
+          >
+          <input
+            type="text"
+            name="username"
+            id="username"
+            minlength="9"
+            maxlength="13"
+            class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+            placeholder="yourusername"
+            required
+          />
+        </div>
+        <!-- Input password -->
+        <div>
+          <label
+            for="password"
+            class="block mb-2.5 text-sm font-medium text-second-color"
+            >Password</label
+          >
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+            placeholder="•••••••••"
+            required
+          />
+        </div>
+        <!-- Input confirm password -->
+        <div>
+          <label
+            for="confirm_password"
+            class="block mb-2.5 text-sm font-medium text-second-color"
+            >Confirm Password</label
+          >
+          <input
+            type="password"
+            id="confirm_password"
+            name="confirm_password"
+            class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
+            placeholder="•••••••••"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Checkbox terms & conditions -->
+      <div class="flex items-center mb-6">
+        <div class="flex items-center h-5">
+          <input
+            id="remember"
+            type="checkbox"
+            value=""
+            class="size-5 border-2 border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
+            required
+          />
+        </div>
+        <label
+          for="remember"
+          class="ms-2 text-base font-medium text-second-color"
+          >I agree with the
+          <a href="#" class="text-third-color hover:underline"
+            >terms and conditions</a
+          >.</label
+        >
+      </div>
+
+      <!-- Button Submit -->
+      <button
+        type="submit"
+        class="w-fit text-white bg-second-color box-border border border-transparent hover:bg-third-color focus:ring-4 focus:ring-third-color shadow-xs font-medium leading-5 rounded-base text-sm px-7 py-2.5 mx-auto my-2 focus:outline-none"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</section>
+{% include "components/footer.html" %} {% endblock %}

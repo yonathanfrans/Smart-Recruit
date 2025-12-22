@@ -1,0 +1,162 @@
+<!-- Navbar -->
+<nav
+  id="navbar"
+  class="absolute w-full z-20 top-0 start-0 mt-1 transition-all duration-300"
+>
+  <div
+    class="max-w-screen flex flex-wrap items-center justify-between mx-auto px-5 md:px-12 py-4"
+  >
+    <!-- logo -->
+    <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img
+        src="{{ url_for('static',filename='img/logo.png') }}"
+        class="h-8 rounded-full"
+        alt="Smart Recruit Logo"
+      />
+      <span
+        class="self-center text-xl text-white font-semibold whitespace-nowrap"
+        >Smart Recruit</span
+      >
+    </a>
+
+    <!-- tombol hamburger menu -->
+    <button
+      data-collapse-toggle="navbar-sticky"
+      type="button"
+      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm rounded-base md:hidden hover:bg-neutral-secondary-soft focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
+      aria-controls="navbar-sticky"
+      aria-expanded="false"
+    >
+      <span class="sr-only">Open main menu</span>
+      <ion-icon
+        name="menu-outline"
+        class="w-6 h-6 text-white hover:text-second-color"
+      ></ion-icon>
+    </button>
+
+    <!-- menu navigasi -->
+    <div class="hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+      <ul
+        class="flex flex-col p-4 md:p-0 mt-4 font-normal text-white text-xl bg-main-color md:bg-transparent border rounded-base md:border-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0"
+      >
+        <li>
+          <a
+            href="/#"
+            class="nav-link block py-2 px-3 my-2 rounded hover:text-second-color {% if active_page != None and active_page == 'candidate' %} text-white bg-second-color md:bg-transparent md:text-second-color {% endif %} md:p-0"
+            aria-current="page"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a
+            href="/#about"
+            class="nav-link block py-2 px-3 my-2 rounded md:p-0 hover:text-second-color"
+            >About</a
+          >
+        </li>
+        <li>
+          <a
+            href="/#category"
+            class="nav-link block py-2 px-3 my-2 rounded md:p-0 hover:text-second-color {% if active_page == 'category' %} text-white bg-second-color md:bg-transparent md:text-second-color {% endif %}"
+            >Category</a
+          >
+        </li>
+        <li>
+          <a
+            href="{{url_for('assistant')}}"
+            class="nav-link block py-2 px-3 my-2 rounded md:p-0 hover:text-second-color"
+            >Your Assistant</a
+          >
+        </li>
+        <li>
+          <button
+            data-modal-target="authentication-modal"
+            data-modal-toggle="authentication-modal"
+            type="button"
+            class="text-white bg-second-color hover:bg-third-color box-border border border-transparent focus:ring-2 focus:ring-third-color hover:ring-2 hover:ring-third-color shadow-xs font-normal leading-5 rounded-base text-xl px-8 py-3 md:px-9 md:py-3 focus:outline-none ml-2 md:ml-0 cursor-pointer"
+          >
+            Login
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Modal Login -->
+<div
+  id="authentication-modal"
+  tabindex="-1"
+  aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+>
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <!-- Modal content -->
+    <div
+      class="relative bg-main-color border rounded-base shadow-sm p-4 md:p-6"
+    >
+      <!-- Modal header -->
+      <div
+        class="flex items-center justify-around border-b border-default pb-4 md:pb-5"
+      >
+        <h3 class="text-lg font-medium text-white">Login to our platform</h3>
+        <button
+          type="button"
+          class="text-white bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+          data-modal-hide="authentication-modal"
+        >
+          <ion-icon class="size-5" name="close-outline"></ion-icon>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <form action="#" class="pt-4 md:pt-6">
+        <div class="mb-4">
+          <label for="email" class="block mb-2.5 text-sm font-medium text-white"
+            >Your Username</label
+          >
+          <input
+            type="text"
+            id="username"
+            class="bg-neutral-secondary-medium border border-default-medium text-second-color text-sm rounded-base focus:ring-second-color focus:border-second-color block w-full px-3 py-2.5 shadow-xs placeholder:text-second-color"
+            placeholder="Username"
+            required
+          />
+        </div>
+        <div>
+          <label
+            for="password"
+            class="block mb-2.5 text-sm font-medium text-white"
+            >Your password</label
+          >
+          <input
+            type="password"
+            id="password"
+            class="bg-neutral-secondary-medium border border-default-medium text-second-color text-sm rounded-base focus:ring-second-color focus:border-second-color block w-full px-3 py-2.5 shadow-xs placeholder:text-second-color"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div class="flex items-start my-6">
+          <a
+            href="#"
+            class="text-sm font-medium text-third-color hover:underline"
+            >Forget Password?</a
+          >
+        </div>
+        <button
+          type="submit"
+          class="text-white bg-second-color border border-transparent hover:bg-third-color focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-base px-4 py-2.5 focus:outline-none w-full mb-3"
+        >
+          Login to your account
+        </button>
+        <div class="text-sm font-medium text-third-color">
+          Not registered?
+          <a href="{{url_for('register')}}" class="text-white hover:underline"
+            >Create account</a
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
