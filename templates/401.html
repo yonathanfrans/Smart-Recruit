@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block content %} {% include
+"components/navbar.html" %}
+
+<section class="my-30">
+  <div class="py-8 px-4 mx-auto max-w-xl lg:py-16 lg:px-6">
+    <div class="mx-auto max-w-screen-sm text-center">
+      <h1
+        class="mb-4 text-7xl tracking-tight font-extrabold lg:text-9xl text-main-color"
+      >
+        401
+      </h1>
+      <p
+        class="mb-4 text-3xl tracking-tight font-bold text-second-color md:text-4xl"
+      >
+        Unauthorized.
+      </p>
+      <p class="mb-4 text-lg font-light text-third-color">
+        Please log in first to access this page.
+      </p>
+    </div>
+  </div>
+</section>
+
+{% include "components/footer.html" %} {% endblock %}

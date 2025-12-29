@@ -37,7 +37,7 @@
     <!-- menu navigasi -->
     <div class="hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
       <ul
-        class="flex flex-col p-4 md:p-0 mt-4 font-normal text-white text-xl bg-main-color md:bg-transparent border rounded-base md:border-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0"
+        class="flex flex-col items-center p-4 md:p-0 mt-4 font-normal text-white text-xl bg-main-color md:bg-transparent border rounded-base md:border-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0"
       >
         <li>
           <a
@@ -69,6 +69,27 @@
           >
         </li>
         <li>
+          {% if current_user.is_authenticated %} {% if current_user.role ==
+          'candidate' %}
+          <!-- Kandidat -->
+          <a
+            href="{{ url_for('profile') }}"
+            class="text-white bg-second-color hover:bg-third-color box-border border border-transparent focus:ring-2 focus:ring-third-color hover:ring-2 hover:ring-third-color shadow-xs font-normal leading-5 rounded-base text-xl px-8 py-3 md:px-9 md:py-3 focus:outline-none ml-2 md:ml-0 cursor-pointer"
+          >
+            Profile
+          </a>
+
+          {% elif current_user.role == 'recruiter' %}
+          <!-- Recruiter -->
+          <a
+            href="{{ url_for('logout') }}"
+            class="text-white bg-second-color hover:bg-third-color box-border border border-transparent focus:ring-2 focus:ring-third-color hover:ring-2 hover:ring-third-color shadow-xs font-normal leading-5 rounded-base text-xl px-8 py-3 md:px-9 md:py-3 focus:outline-none ml-2 md:ml-0 cursor-pointer"
+          >
+            Logout
+          </a>
+
+          {% endif %} {% else %}
+          <!-- Guest -->
           <button
             data-modal-target="authentication-modal"
             data-modal-toggle="authentication-modal"
@@ -77,6 +98,7 @@
           >
             Login
           </button>
+          {% endif %}
         </li>
       </ul>
     </div>
@@ -110,14 +132,17 @@
         </button>
       </div>
       <!-- Modal body -->
-      <form action="#" class="pt-4 md:pt-6">
+      <form action="{{ url_for('login') }}" method="POST" class="pt-4 md:pt-6">
         <div class="mb-4">
-          <label for="email" class="block mb-2.5 text-sm font-medium text-white"
+          <label
+            for="username"
+            class="block mb-2.5 text-sm font-medium text-white"
             >Your Username</label
           >
           <input
             type="text"
             id="username"
+            name="username"
             class="bg-neutral-secondary-medium border border-default-medium text-second-color text-sm rounded-base focus:ring-second-color focus:border-second-color block w-full px-3 py-2.5 shadow-xs placeholder:text-second-color"
             placeholder="Username"
             required
@@ -132,6 +157,7 @@
           <input
             type="password"
             id="password"
+            name="password"
             class="bg-neutral-secondary-medium border border-default-medium text-second-color text-sm rounded-base focus:ring-second-color focus:border-second-color block w-full px-3 py-2.5 shadow-xs placeholder:text-second-color"
             placeholder="Password"
             required

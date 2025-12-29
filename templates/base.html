@@ -12,7 +12,81 @@
     />
   </head>
   <body class="font-main">
-    {% block content %} {% endblock %}
+    {% block content %} {% endblock %} {% with messages =
+    get_flashed_messages(with_categories=true) %} {% if messages %}
+    <div class="fixed top-5 right-5 z-50 space-y-4">
+      {% for category, message in messages %} {% if category == 'success' %}
+      <div
+        id="toast-success"
+        class="flex items-center w-full max-w-sm p-4 text-body bg-main-color rounded-base shadow-xs border border-main-color"
+        role="alert"
+      >
+        <div
+          class="inline-flex items-center justify-center shrink-0 size-7 text-fg-success bg-success-medium rounded"
+        >
+          <ion-icon name="checkmark-circle-outline" class="size-5"></ion-icon>
+        </div>
+
+        <div class="ms-3 text-sm font-normal text-white">{{ message }}</div>
+
+        <button
+          type="button"
+          class="ms-auto ml-5 flex items-center justify-center text-white hover:text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded text-sm size-8 focus:outline-none"
+          data-dismiss-target="#toast-success"
+          aria-label="Close"
+        >
+          <ion-icon name="close-outline" class="size-5"></ion-icon>
+        </button>
+      </div>
+      {% endif %} {% if category == 'warning' %}
+      <div
+        id="toast-warning"
+        class="flex items-center w-full max-w-sm p-4 bg-main-color rounded-base shadow-xs border border-main-color"
+        role="alert"
+      >
+        <div
+          class="inline-flex items-center justify-center shrink-0 size-7 text-fg-warning bg-warning-medium rounded"
+        >
+          <ion-icon name="alert-circle-outline" class="size-5"></ion-icon>
+        </div>
+
+        <div class="ms-3 text-sm font-normal text-white">{{ message }}</div>
+
+        <button
+          type="button"
+          class="ms-auto ml-5 flex items-center justify-center text-white hover:text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded text-sm h-8 w-8 focus:outline-none"
+          data-dismiss-target="#toast-warning"
+          aria-label="Close"
+        >
+          <ion-icon name="close-outline" class="size-5"></ion-icon>
+        </button>
+      </div>
+      {% endif %} {% if category == 'danger' %}
+      <div
+        id="toast-danger"
+        class="flex items-center w-full max-w-sm p-4 bg-main-color rounded-base shadow-xs border border-main-color"
+        role="alert"
+      >
+        <div
+          class="inline-flex items-center justify-center shrink-0 size-7 text-fg-danger bg-danger-medium rounded"
+        >
+          <ion-icon name="close-outline" class="size-5"></ion-icon>
+        </div>
+
+        <div class="ms-3 text-sm font-normal text-white">{{ message }}</div>
+
+        <button
+          type="button"
+          class="ms-auto ml-5 flex items-center justify-center text-white hover:text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded text-sm h-8 w-8 focus:outline-none"
+          data-dismiss-target="#toast-danger"
+          aria-label="Close"
+        >
+          <ion-icon name="close-outline" class="size-5"></ion-icon>
+        </button>
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
 
     <!-- script js -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>

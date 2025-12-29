@@ -70,8 +70,8 @@
         </a>
       </li>
       <li>
-        <button
-          type="button"
+        <a
+          href="{{ url_for('logout') }}"
           class="flex items-center w-full px-2.5 py-1.5 text-white rounded-base hover:bg-neutral-tertiary hover:text-second-color group"
         >
           <ion-icon
@@ -79,7 +79,7 @@
             class="size-6 transition duration-75 group-hover:text-second-color"
           ></ion-icon>
           <span class="ms-5">Logout</span>
-        </button>
+        </a>
       </li>
     </ul>
   </div>
@@ -98,7 +98,9 @@
     </div>
     <!-- Form profile data -->
     <form
-      action="#"
+      action="{{ url_for('update_profile') }}"
+      method="POST"
+      enctype="multipart/form-data"
       class="flex flex-wrap flex-row justify-center md:justify-around gap-x-10 border-0 border-third-color rounded-base bg-gray-100 md:m-10 mt-5 p-5"
     >
       <!-- Input image profile & Status -->
@@ -108,8 +110,12 @@
         <!-- input image -->
         <img
           class="size-50 rounded-full"
-          src="{{ url_for('static', filename='img/user-profile.jpg') }}"
-          alt="Rounded profile"
+          src="{% if profile.image %}
+              {{ url_for('static', filename='uploads/profile/' ~ profile.image) }}
+              {% else %}
+              {{ url_for('static', filename='img/user-profile.jpg') }}
+              {% endif %}"
+          alt="Rounded profile Image"
         />
         <input
           class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-second-color text-sm rounded-base focus:ring-second-color focus:border-second-color block w-fit shadow-xs placeholder:text-third-color"
@@ -135,8 +141,10 @@
             class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-sm focus:ring-third-color focus:border-third-color shadow-xs placeholder:text-third-color"
           >
             <option selected disabled>Choose a status</option>
-            <option value="Unemployed">Unemployed</option>
-            <option value="Employed">Employed</option>
+            <option value="Unemployed"
+              {% if profile.status == 'Unemployed' %}selected{% endif %}>Unemployed</option>
+            <option value="Employed"
+              {% if profile.status == 'Employed' %}selected{% endif %}>Employed</option>
           </select>
         </div>
       </div>
@@ -156,6 +164,7 @@
               type="text"
               id="first_name"
               name="first_name"
+              value="{{ profile.first_name }}"
               class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
               placeholder="Your first name"
               required
@@ -172,6 +181,7 @@
               type="text"
               id="last_name"
               name="last_name"
+              value="{{ profile.last_name }}"
               class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
               placeholder="Your last name"
               required
@@ -188,6 +198,7 @@
               type="date"
               id="birthdate"
               name="birthdate"
+              value="{{ profile.birthdate }}"
               class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
               required
             />
@@ -203,6 +214,7 @@
               type="text"
               id="username"
               name="username"
+              value="{{ user.username }}"
               class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
               placeholder="yourusername"
               required
@@ -221,7 +233,10 @@
               rows="4"
               class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
               placeholder="Your address"
-            ></textarea>
+              required
+            >
+{{ profile.address | default('', true) }}</textarea
+            >
           </div>
         </div>
 
@@ -252,6 +267,7 @@
                 inputmode="numeric"
                 minlength="9"
                 maxlength="13"
+                value="{{ profile.phone_number }}"
                 class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full ps-10 pe-3 py-3 shadow-xs placeholder:text-third-color"
                 placeholder="123 45 678"
                 required
@@ -278,6 +294,7 @@
                 type="email"
                 id="email-user"
                 name="email"
+                value="{{ profile.email }}"
                 class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full ps-10 pe-3 py-3 shadow-xs placeholder:text-third-color"
                 placeholder="youremail@mail.com"
                 required
@@ -309,8 +326,9 @@
                 type="text"
                 name="instagram"
                 id="instagram"
+                value="{{ profile.instagram | default('', true) }}"
                 class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full ps-10 pe-3 py-3 shadow-xs placeholder:text-third-color"
-                placeholder="@yourinstagram"
+                placeholder="yourusername"
                 required
               />
             </div>
@@ -335,8 +353,9 @@
                 type="text"
                 name="github"
                 id="github"
+                value="{{ profile.github | default('', true) }}"
                 class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full ps-10 pe-3 py-3 shadow-xs placeholder:text-third-color"
-                placeholder="@yourgithub"
+                placeholder="yourusername"
                 required
               />
             </div>
@@ -364,11 +383,12 @@
     </div>
     <!-- Form job role -->
     <form
-      action="#"
-      class="flex flex-col justify-center flex-wrap border-0 border-third-color rounded-base bg-gray-100 md:m-10 mt-5 px-10 py-5"
+      action="{{ url_for('save_job_role') }}"
+      method="POST"
+      enctype="multipart/form-data"
+      class="flex flex-col justify-center flex-wrap border-0 border-third-color rounded-base bg-gray-100 md:m-10 mt-5 md:px-10 p-5"
     >
       <div class="flex flex-col flex-wrap">
-        <!-- Skills & Education -->
         <h3 class="my-3 text-lg text-second-color">Skills & Education</h3>
         <div class="grid gap-6 mb-6 mt-2 lg:grid-cols-2">
           <!-- Input skills -->
@@ -382,6 +402,7 @@
               type="text"
               id="skills"
               name="skills"
+              value="{{ job.skills | default('', true) }}"
               class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
               placeholder="Python, Networking, Linux, etc.."
               required
@@ -398,6 +419,7 @@
               type="text"
               id="education"
               name="education"
+              value="{{ job.education | default('', true) }}"
               class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-min px-4 py-3 shadow-xs placeholder:text-third-color"
               placeholder="B.Tech, PhD, or other degrees.."
               required
@@ -419,6 +441,7 @@
               type="text"
               id="certifications"
               name="certifications"
+              value="{{ job.certification | default('', true) }}"
               class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
               placeholder="Google ML, AWS Certified, etc.."
               required
@@ -433,16 +456,25 @@
             >
             <input
               type="file"
-              id="file_certifications"
-              name="file_certifications"
+              id="certification_files"
+              name="certification_files"
               class="cursor-pointer bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-fit shadow-xs placeholder:text-third-color"
               accept=".pdf"
               multiple
-              required
             />
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">
-              Upload files in PDF format only.
+            <p class="mt-1 text-sm text-gray-500">
+              Upload files in PDF format only. Max 16MB
             </p>
+            {% if job.certification_files %}
+            <div class="text-sm text-main-color">
+              <p class="font-medium mb-1">Uploaded Certifications:</p>
+              <ol class="list-decimal list-inside">
+                {% for file in job.certification_files.split(',') %}
+                <li class="py-1">{{ file }}</li>
+                {% endfor %}
+              </ol>
+            </div>
+            {% endif %}
           </div>
         </div>
 
@@ -463,7 +495,9 @@
               maxlength="600"
               class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
               placeholder="Tell us about your work experience.."
-            ></textarea>
+            >
+{{ job.experience | default('', true) }}</textarea
+            >
           </div>
           <!-- Input experience years -->
           <div>
@@ -487,13 +521,13 @@
               <input
                 type="text"
                 id="experience_years"
+                name="experience_years"
                 data-input-counter
                 data-input-counter-min="0"
                 data-input-counter-max="10"
                 aria-describedby="helper-text-explanation"
                 class="border-x-0 h-10 text-second-color text-center w-10 bg-neutral-secondary-medium border-second-color py-2.5 placeholder:text-third-color"
-                value="0"
-                disabled
+                value="{{ job.experience_years | default('0', true) }}"
                 required
               />
               <button
@@ -528,7 +562,9 @@
               maxlength="600"
               class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
               placeholder="Describe the projects you have worked on."
-            ></textarea>
+            >
+{{ job.projects | default('', true) }}</textarea
+            >
           </div>
           <!-- Input projects count -->
           <div>
@@ -552,13 +588,13 @@
               <input
                 type="text"
                 id="projects_count"
+                name="projects_count"
                 data-input-counter
                 data-input-counter-min="0"
                 data-input-counter-max="10"
                 aria-describedby="helper-text-explanation"
                 class="border-x-0 h-10 text-second-color text-center w-10 bg-neutral-secondary-medium border-second-color py-2.5 placeholder:text-third-color"
-                value="0"
-                disabled
+                value="{{ job.projects_count | default('0', true) }}"
                 required
               />
               <button

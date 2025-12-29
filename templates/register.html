@@ -12,7 +12,9 @@
   </div>
   <!-- Form Register -->
   <form
-    action="#"
+    action="{{ url_for('register') }}"
+    method="POST"
+    enctype="multipart/form-data"
     class="flex flex-wrap flex-row justify-center md:justify-around gap-x-10 border border-third-color rounded-base bg-gray-200 m-10 p-10"
   >
     <!-- Input image profile -->
@@ -107,7 +109,7 @@
             minlength="9"
             maxlength="13"
             class="bg-neutral-secondary-medium border border-second-color text-third-color text-sm rounded-base focus:ring-third-color focus:border-third-color block w-full px-4 py-3 shadow-xs placeholder:text-third-color"
-            placeholder="123 45 678"
+            placeholder="123-45-678"
             required
           />
         </div>
