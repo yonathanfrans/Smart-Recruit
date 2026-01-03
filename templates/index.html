@@ -85,7 +85,7 @@
   >
     <!-- Card data science -->
     <div class="bg-main-color block max-w-sm border-b rounded-base shadow-xs">
-      <a href="{{url_for('candidate')}}">
+      <a href="{{url_for('candidate', category='data-science')}}">
         <img
           class="rounded-t-base size-80 object-cover"
           src="{{ url_for('static', filename='img/data-science.jpg') }}"
@@ -93,7 +93,7 @@
         />
       </a>
       <div class="p-4 text-center">
-        <a href="{{url_for('candidate')}}">
+        <a href="{{url_for('candidate', category='data-science')}}">
           <h5
             class="mt-3 mb-6 text-2xl font-semibold tracking-tight text-white"
           >
@@ -101,34 +101,18 @@
           </h5>
         </a>
         <a
-          href="{{url_for('candidate')}}"
+          href="{{url_for('candidate', category='data-science')}}"
           class="inline-flex items-center text-white bg-second-color border border-transparent hover:bg-third-color focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
         >
           View More
-          <svg
-            class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 12H5m14 0-4 4m4-4-4-4"
-            />
-          </svg>
+          <ion-icon name="eye-outline" class="size-4 ms-2 -me-0.5"></ion-icon>
         </a>
       </div>
     </div>
 
     <!-- Card AI -->
     <div class="bg-main-color block max-w-sm border-b rounded-base shadow-xs">
-      <a href="{{url_for('candidate')}}">
+      <a href="{{url_for('candidate', category='ai')}}">
         <img
           class="rounded-t-base size-80 object-cover"
           src="{{ url_for('static', filename='img/AI.jpg') }}"
@@ -136,7 +120,7 @@
         />
       </a>
       <div class="p-4 text-center">
-        <a href="{{url_for('candidate')}}">
+        <a href="{{url_for('candidate', category='ai')}}">
           <h5
             class="mt-3 mb-6 text-2xl font-semibold tracking-tight text-white"
           >
@@ -144,34 +128,18 @@
           </h5>
         </a>
         <a
-          href="{{url_for('candidate')}}"
+          href="{{url_for('candidate', category='ai')}}"
           class="inline-flex items-center text-white bg-second-color border border-transparent hover:bg-third-color focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
         >
           View More
-          <svg
-            class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 12H5m14 0-4 4m4-4-4-4"
-            />
-          </svg>
+          <ion-icon name="eye-outline" class="size-4 ms-2 -me-0.5"></ion-icon>
         </a>
       </div>
     </div>
 
     <!-- Card Cybersecurity -->
     <div class="bg-main-color block max-w-sm border-b rounded-base shadow-xs">
-      <a href="{{url_for('candidate')}}">
+      <a href="{{url_for('candidate', category='cybersecurity')}}">
         <img
           class="rounded-t-base size-80 object-cover"
           src="{{ url_for('static', filename='img/Cybersecurity.jpg') }}"
@@ -179,7 +147,7 @@
         />
       </a>
       <div class="p-4 text-center">
-        <a href="{{url_for('candidate')}}">
+        <a href="{{url_for('candidate', category='cybersecurity')}}">
           <h5
             class="mt-3 mb-6 text-2xl font-semibold tracking-tight text-white"
           >
@@ -187,27 +155,11 @@
           </h5>
         </a>
         <a
-          href="{{url_for('candidate')}}"
+          href="{{url_for('candidate', category='cybersecurity')}}"
           class="inline-flex items-center text-white bg-second-color border border-transparent hover:bg-third-color focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
         >
           View More
-          <svg
-            class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 12H5m14 0-4 4m4-4-4-4"
-            />
-          </svg>
+          <ion-icon name="eye-outline" class="size-4 ms-2 -me-0.5"></ion-icon>
         </a>
       </div>
     </div>

@@ -3,11 +3,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_login import login_user, logout_user, login_required, current_user
 from functools import wraps
-import os
-
 from extensions import db, login_manager
 from models import User, CandidateProfile, JobClassification
 from datetime import datetime
+
+import joblib
+import os
+import numpy as np
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret-key-anda'
@@ -23,7 +26,7 @@ login_manager.login_view = None
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))
 
 # Role Based Access
 def role_required(role):
@@ -38,6 +41,41 @@ def role_required(role):
         return wrapped
     return decorator
 
+# Load model ML
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+MODEL_PATH = os.path.join(BASE_DIR, 'model')
+
+model = joblib.load(os.path.join(MODEL_PATH, 'model.pkl'))
+skills_vectorizer = joblib.load(os.path.join(MODEL_PATH, 'skills_vectorizer.pkl'))
+certs_vectorizer = joblib.load(os.path.join(MODEL_PATH, 'certs_vectorizer.pkl'))
+education_map = joblib.load(os.path.join(MODEL_PATH, 'education_map.pkl'))
+
+def predict_job_role(jc):
+    skills_text = jc.skills or ""
+    certs_text = jc.certification or ""
+
+    skills_vec = skills_vectorizer.transform([skills_text])
+    certs_vec = certs_vectorizer.transform([certs_text])
+    education_value = education_map.get(jc.education, 0)
+    experience_years = jc.experience_years or 0
+    projects_count = jc.projects_count or 0
+
+    numeric_features = np.array([
+        education_value,
+        experience_years,
+        projects_count
+    ]).reshape(1, -1)
+
+    X = np.hstack([
+        skills_vec.toarray(),
+        certs_vec.toarray(),
+        numeric_features
+    ])
+
+    prediction = model.predict(X)
+
+    return prediction[0]
 
 # Routes
 @app.route('/')
@@ -54,7 +92,78 @@ def assistant():
 @login_required
 @role_required('recruiter')
 def candidate():
-    return render_template("candidate.html", active_page="category")
+    category = request.args.get("category")
+    search = request.args.get("search")
+    roles = request.args.getlist("role")
+
+    CATEGORY_MAP = {
+    'data-science': 'Data Scientist',
+    'ai': 'AI Engineer',
+    'cybersecurity': 'Cybersecurity Engineer'
+    }
+
+
+    query = (
+        db.session.query(User)
+        .join(CandidateProfile)
+        .join(JobClassification)
+        .filter(User.role == 'candidate', CandidateProfile.status == 'Unemployed') 
+    )
+
+    # sinkronisasi category → checkbox
+    if category:
+        mapped_role = CATEGORY_MAP.get(category.lower())
+        if mapped_role and mapped_role not in roles:
+            roles.append(mapped_role)
+
+    roles = [r for r in roles if r in CATEGORY_MAP.values()]
+    
+    # Search nama kandidat
+    if search:
+        query = query.filter(
+            db.or_(
+                CandidateProfile.first_name.ilike(f"%{search}%"),
+                CandidateProfile.last_name.ilike(f"%{search}%")
+            )
+        )
+
+    # Filter checkbox job role
+    if roles:
+        query = query.filter(
+            JobClassification.job_role.in_(roles)
+        )
+
+    candidates = query.all()
+
+    return render_template(
+        "candidate.html",
+        candidates=candidates,
+        selected_roles=roles,
+        search=search,
+        active_page='category'
+    )
+
+@app.route("/candidate/<string:username>")
+@login_required
+@role_required('recruiter')
+def candidate_detail(username):
+    candidate = (
+        db.session.query(User)
+        .join(CandidateProfile)
+        .join(JobClassification)
+        .filter(
+            User.username == username,
+            User.role == 'candidate'
+        )
+        .first_or_404()
+    )
+
+    return render_template(
+        "detail-candidate.html", 
+        candidate=candidate,
+        active_page="category"
+    )
+
 
 @app.route("/profile", methods=["GET"])
 @login_required
@@ -168,16 +277,13 @@ def save_job_role():
         )
         db.session.add(jc)
 
+    job_role = predict_job_role(jc)
+    jc.job_role = job_role
+
     db.session.commit()
     flash('Job role data saved successfully', 'success')
     return redirect(url_for('profile'))
 
-
-@app.route("/detail-candidate")
-@login_required
-@role_required('recruiter')
-def detailCandidate():
-    return render_template("detail-candidate.html", active_page="category")
 
 # Login & Register
 @app.route('/register', methods=['GET', 'POST'])

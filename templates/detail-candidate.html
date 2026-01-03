@@ -8,31 +8,43 @@
   >
     <!-- Profile Candidate -->
     <img
-      class="size-60 rounded-full"
-      src="{{ url_for('static', filename='img/user-profile.jpg') }}"
+      class="size-60 rounded-full object-cover"
+      src="{% if candidate.profile.image %}
+              {{ url_for('static', filename='uploads/profile/' ~ candidate.profile.image) }}
+              {% else %}
+              {{ url_for('static', filename='img/user-profile.jpg') }}
+             {% endif %}"
       alt="Rounded profile"
     />
     <div class="flex flex-col items-center gap-y-5">
       <!-- Name Candidate -->
-      <h2 class="font-bold text-3xl text-main-color">John Doe</h2>
+      <h2 class="font-bold text-3xl text-main-color">
+        {{ candidate.profile.first_name }} {{ candidate.profile.last_name }}
+      </h2>
       <span class="font-medium text-2xl text-second-color"
         >Looking for a job as a
         <span class="font-semibold text-fourth-color"
-          >Data Scientist</span
+          >{{ candidate.job_classification.job_role }}</span
         ></span
       >
       <!-- Social Media -->
       <div class="flex flex-row gap-x-15">
-        <a href="#">
+        <a
+          href="https://www.instagram.com/{{ candidate.profile.instagram }}"
+          target="_blank"
+        >
           <ion-icon
             name="logo-instagram"
             class="size-7 text-pink-500"
           ></ion-icon>
         </a>
-        <a href="#">
+        <a
+          href="https://github.com/{{ candidate.profile.github }}"
+          target="_blank"
+        >
           <ion-icon name="logo-github" class="size-7"></ion-icon>
         </a>
-        <a href="#">
+        <a href="mailto:{{ candidate.profile.email }}">
           <ion-icon name="mail-outline" class="size-7 text-red-700"></ion-icon>
         </a>
       </div>
@@ -56,33 +68,29 @@
         <!-- Birthdate -->
         <div class="flex flex-wrap flex-col text-sm">
           <h3 class="text-third-color">Birthdate</h3>
-          <h4 class="text-main-color">04 December 2025</h4>
+          <h4 class="text-main-color">{{ candidate.profile.birthdate }}</h4>
         </div>
         <!-- Education -->
         <div class="flex flex-wrap flex-col text-sm">
           <h3 class="text-third-color">Education</h3>
-          <h4 class="text-main-color">M.Tech</h4>
+          <h4 class="text-main-color">
+            {{ candidate.job_classification.education }}
+          </h4>
         </div>
         <!-- Email -->
         <div class="flex flex-wrap flex-col text-sm">
           <h3 class="text-third-color">Email Address</h3>
-          <h4 class="text-main-color">youremail@mail.com</h4>
+          <h4 class="text-main-color">{{ candidate.profile.email }}</h4>
         </div>
         <!-- Phone Number -->
         <div class="flex flex-wrap flex-col text-sm">
           <h3 class="text-third-color">Phone Number</h3>
-          <h4 class="text-main-color">123 45 678</h4>
+          <h4 class="text-main-color">{{ candidate.profile.phone_number }}</h4>
         </div>
         <!-- address -->
         <div class="flex flex-wrap flex-col text-sm col-span-2">
           <h3 class="text-third-color">Address</h3>
-          <p class="text-main-color">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi
-            soluta corporis, eveniet officiis, qui voluptas accusantium quos
-            dolor veritatis corrupti expedita sit mollitia! Fuga sunt laborum
-            officia, exercitationem quidem quas. Nihil nulla eaque nisi debitis,
-            corrupti ducimus
-          </p>
+          <p class="text-main-color">{{ candidate.profile.address }}</p>
         </div>
       </div>
     </div>
@@ -107,20 +115,14 @@
         <div class="flex flex-wrap flex-col text-sm">
           <h3 class="text-third-color">My Skills</h3>
           <p class="text-main-color">
-            Python, Machine Learning, Laravel, Tailwind
+            {{ candidate.job_classification.skills }}
           </p>
         </div>
         <!-- Projects -->
         <div class="flex flex-wrap flex-col text-sm">
           <h3 class="text-third-color">My Projects</h3>
           <p class="text-main-color">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-            quas quis nobis sapiente, saepe cupiditate quam alias incidunt, sunt
-            soluta architecto maiores maxime consectetur perferendis quia non
-            quo aperiam hic. Nam, ratione. Nostrum officia pariatur vero ducimus
-            adipisci magnam dicta sed. Quibusdam accusantium neque aperiam
-            recusandae officia. Recusandae provident voluptates, maiores vero
-            natus ullam, illum, nesciunt nihil sequi voluptatum magni.
+            {{ candidate.job_classification.projects }}
           </p>
         </div>
       </div>
@@ -145,44 +147,53 @@
         <!-- Experience Years -->
         <div class="flex flex-wrap flex-col text-sm">
           <h3 class="text-third-color">Experience</h3>
-          <span class="text-main-color"> 4 Years </span>
+          <span class="text-main-color"
+            >{{ candidate.job_classification.experience_years }} years</span
+          >
         </div>
         <!-- Detail Experience-->
         <div class="flex flex-wrap flex-col text-sm">
           <h3 class="text-third-color">Detail Experience</h3>
           <p class="text-main-color">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facere eum
-            beatae error repellat rerum illum maiores facilis architecto
-            necessitatibus placeat doloremque nihil consequatur, nisi illo. Est
-            distinctio quisquam officiis blanditiis. Possimus nisi officia aut
-            adipisci placeat impedit temporibus porro eaque eos! Deleniti
-            facere, perspiciatis sit ratione modi assumenda sapiente praesentium
-            soluta cumque vel quam esse similique iure sunt quisquam ut.
+            {{ candidate.job_classification.experience }}
           </p>
         </div>
         <!-- Certifcations -->
         <div class="flex flex-wrap flex-col text-sm">
           <h3 class="text-third-color">My Certifications</h3>
-          <p class="text-main-color">Google ML, AWS Certified</p>
+          <p class="text-main-color">
+            {{ candidate.job_classification.certification }}
+          </p>
         </div>
         <!-- File Certifcations -->
         <div class="flex flex-wrap flex-col text-sm">
           <h3 class="text-third-color">File Certifications</h3>
+          {% if candidate.job_classification.certification_files %} {% for file
+          in candidate.job_classification.certification_files.split(',') %}
           <div class="flex justify-between border-2 border-gray-200 p-2">
             <div class="flex items-center gap-x-2">
               <ion-icon
                 name="attach-outline"
                 class="size-5 text-third-color"
               ></ion-icon>
-              <p class="text-main-color">google-ml.pdf</p>
+              <p class="text-main-color">{{ file }}</p>
             </div>
             <div
               class="flex items-center gap-x-2 cursor-pointer text-third-color hover:text-main-color hover:underline"
             >
               <ion-icon name="eye-outline" class="size-5"></ion-icon>
-              <span>View</span>
+              <a
+                href="{{ url_for('static', filename='uploads/certifications/' ~ file) }}"
+                target="_blank"
+                >View</a
+              >
             </div>
           </div>
+          {% endfor %} {% else %}
+          <p class="text-sm text-third-color">
+            No certification files uploaded.
+          </p>
+          {% endif %}
         </div>
       </div>
     </div>

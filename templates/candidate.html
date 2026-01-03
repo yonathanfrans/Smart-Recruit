@@ -1,7 +1,10 @@
 {% extends "base.html" %} {% block content %} {% include
 "components/navbar.html" %}
 <section class="mt-30 mb-10 mx-auto">
-  <div
+  <form
+    method="GET"
+    action="{{ url_for('candidate') }}"
+    id="filterForm"
     class="flex flex-wrap flex-row justify-center md:justify-around gap-5 mx-10"
   >
     <!-- Tabs Filter -->
@@ -18,58 +21,29 @@
       <ul
         class="w-48 m-2 select-none text-base font-medium text-second-color bg-neutral-primary-soft border border-default rounded-base"
       >
+        {% set roles_list = [ 'Data Scientist', 'AI Engineer', 'Cybersecurity Engineer' ] %} {% for role in roles_list %}
         <li class="w-full border-b border-default rounded-t-lg">
-          <div class="flex items-center ps-3">
+          <label class="flex items-center ps-3 cursor-pointer">
             <input
-              id="data-scientist-checkbox"
               type="checkbox"
-              value=""
-              class="w-4 h-4 border border-main-color rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
+              name="role"
+              value="{{ role }}"
+              {% if role in selected_roles %}checked{% endif %}
+              class="role-checkbox w-4 h-4 border border-main-color rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
             />
-            <label
-              for="data-scientist-checkbox"
-              class="w-full py-3 ms-2 text-sm font-medium text-second-color"
-              >Data Scientist</label
+            <span class="w-full py-3 ms-2 text-sm font-medium text-second-color"
+              >{{ role }}</span
             >
-          </div>
+          </label>
         </li>
-        <li class="w-full border-b border-default rounded-t-lg">
-          <div class="flex items-center ps-3">
-            <input
-              id="ai-checkbox"
-              type="checkbox"
-              value=""
-              class="w-4 h-4 border border-main-color rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
-            />
-            <label
-              for="ai-checkbox"
-              class="w-full py-3 ms-2 text-sm font-medium text-second-color"
-              >AI Engineer</label
-            >
-          </div>
-        </li>
-        <li class="w-full border-b border-default rounded-t-lg">
-          <div class="flex items-center ps-3">
-            <input
-              id="cybersecurity-checkbox"
-              type="checkbox"
-              value=""
-              class="w-4 h-4 border border-main-color rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
-            />
-            <label
-              for="cybersecurity-checkbox"
-              class="w-full py-3 ms-2 text-sm font-medium text-second-color"
-              >Cybersecurity Engineer</label
-            >
-          </div>
-        </li>
+        {% endfor %}
       </ul>
     </div>
 
     <!-- Candidate -->
     <div class="flex flex-wrap flex-col justify-start px-5 py-3 md:py-0 w-4xl">
       <!-- Input Search -->
-      <form action="#" class="max-w-md">
+      <div class="max-w-md">
         <label
           for="search"
           class="block mb-2.5 text-sm font-medium text-second-color sr-only"
@@ -87,87 +61,90 @@
           <input
             type="search"
             id="search"
+            name="search"
             class="block w-xs md:w-lg p-4 ps-10 bg-neutral-secondary-medium border border-third-color text-second-color text-sm rounded-base focus:ring-second-color focus:border-second-color shadow-xs placeholder:text-third-color"
             placeholder="Search for a candidate"
-            required
+            value="{{ search or '' }}"
           />
         </div>
-      </form>
-
-      <!-- Badge Filter -->
-      <span
-        id="badge-dismiss-alternative"
-        class="inline-flex items-center bg-second-color border border-default text-white text-xs font-medium ps-3 pe-1 py-1 rounded-base gap-2 w-fit my-4"
-      >
-        <span>Cybersecurity Engineer</span>
-        <button
-          type="button"
-          class="inline-flex items-center p-0.5 text-sm bg-transparent rounded-xs hover:bg-third-color"
-          data-dismiss-target="#badge-dismiss-alternative"
-          aria-label="Remove"
-        >
-          <ion-icon name="close-outline" class="size-3.5"></ion-icon>
-          <span class="sr-only">Remove badge</span>
-        </button>
-      </span>
+      </div>
 
       <!-- Card Candidate -->
       <div
-        class="flex flex-wrap justify-center md:justify-start flex-row gap-10 my-4"
+        class="flex flex-wrap justify-center md:justify-start flex-row gap-10 my-8"
       >
+        {% for candidate in candidates %}
         <div
-          class="bg-gray-100 block max-w-sm py-6 px-10 border border-transparent rounded-lg shadow-xl"
+          class="bg-gray-100 block max-w-sm py-6 px-10 border border-fourth-color rounded-lg shadow-xl"
         >
           <div class="flex flex-col items-center">
             <!-- Profile picture -->
             <img
-              class="size-30 mb-6 rounded-full"
-              src="{{ url_for('static', filename='img/user-profile.jpg') }}"
+              class="size-40 mb-6 rounded-full object-cover"
+              src="{% if candidate.profile.image %}
+              {{ url_for('static', filename='uploads/profile/' ~ candidate.profile.image) }}
+              {% else %}
+              {{ url_for('static', filename='img/user-profile.jpg') }}
+             {% endif %}"
               alt="Profile user"
             />
             <!-- Name User -->
             <h5
               class="mb-0.5 text-xl font-semibold tracking-tight text-main-color"
             >
-              John Doe
+              {{ candidate.profile.first_name }} {{ candidate.profile.last_name
+              }}
             </h5>
             <!-- Job role -->
             <span class="text-base text-third-color"
-              >Cybersecurity Engineer</span
+              >{{ candidate.job_classification.job_role or '-' }}</span
             >
 
             <!-- Social Media -->
             <div class="flex flex-wrap items-center gap-x-5 my-3">
-              <a href="#">
+              {% if candidate.profile.instagram %}
+              <a
+                href="https://instagram.com/{{ candidate.profile.instagram }}"
+                target="_blank"
+              >
                 <ion-icon
                   name="logo-instagram"
                   class="size-4 text-pink-400"
                 ></ion-icon>
               </a>
-              <a href="#">
+              {% endif %} {% if candidate.profile.github %}
+              <a
+                href="https://github.com/{{ candidate.profile.github }}"
+                target="_blank"
+              >
                 <ion-icon name="logo-github" class="size-4"></ion-icon>
               </a>
-              <a href="#">
+              {% endif %} {% if candidate.profile.email %}
+              <a href="mailto:{{ candidate.profile.email }}">
                 <ion-icon
                   name="mail-outline"
                   class="size-4 text-red-500"
                 ></ion-icon>
               </a>
+              {% endif %}
             </div>
 
             <!-- button view profile -->
             <a
-              href="/detail-candidate"
+              href="{{ url_for('candidate_detail', username=candidate.username) }}"
               class="inline-flex items-center text-white bg-second-color box-border border border-transparent hover:bg-third-color focus:ring-4 focus:ring-second-color shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 mt-3 focus:outline-none"
             >
               View Profile
-              <ion-icon name="eye-outline" class="size-4 ms-2.5"></ion-icon>
+              <ion-icon name="person" class="size-4 ms-2.5 mb-0.5"></ion-icon>
             </a>
           </div>
         </div>
+        {% else %}
+        <p class="text-center text-third-color text-sm">No candidates found.</p>
+        {% endfor %}
       </div>
     </div>
-  </div>
+  </form>
 </section>
 
 {% include "components/footer.html" %} {% endblock %}
