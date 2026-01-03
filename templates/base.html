@@ -12,8 +12,7 @@
     />
   </head>
   <body class="font-main">
-    {% block content %} {% endblock %} {% with messages =
-    get_flashed_messages(with_categories=true) %} {% if messages %}
+    {% block content %} {% endblock %} {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
     <div class="fixed top-5 right-5 z-50 space-y-4">
       {% for category, message in messages %} {% if category == 'success' %}
       <div
