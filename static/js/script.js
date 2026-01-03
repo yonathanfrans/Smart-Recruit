@@ -94,3 +94,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+// Auto submit Checkbox filter
+document.querySelectorAll('input[name="role"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const url = new URL(window.location.href)
+
+      // 🔥 HAPUS category dari path
+      const pathParts = url.pathname.split('/')
+      if (pathParts.length > 2) {
+        url.pathname = '/candidate'
+      }
+
+      // submit ulang tanpa category
+      document.getElementById('filterForm').action = url.pathname
+      document.getElementById('filterForm').submit()
+    })
+  })
