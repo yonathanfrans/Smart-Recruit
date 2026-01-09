@@ -14,7 +14,102 @@
 
   <!-- content -->
   <div
-    class="flex flex-wrap flex-row justify-center items-center mb-10 mt-10 px-6 md:justify-around md:mx-7 md:px-0"
-  ></div>
+    class="flex flex-wrap flex-row justify-center items-center my-10 px-6 md:justify-around md:mx-7 md:px-0"
+  >
+    <!-- Chatbot -->
+    <flowise-fullchatbot></flowise-fullchatbot>
+    <script type="module">
+      import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
+      Chatbot.initFull({
+        chatflowid: "05d7c2af-2d03-4609-acae-6edc2c773f5f",
+        apiHost: "http://localhost:3000",
+        theme: {
+          button: {
+            backgroundColor: "#2D3250",
+            right: 20,
+            bottom: 20,
+            size: 48,
+            dragAndDrop: true,
+            iconColor: "white",
+            customIconSrc:
+              "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
+            autoWindowOpen: {
+              autoOpen: true,
+              openDelay: 2,
+              autoOpenOnMobile: true,
+            },
+          },
+          tooltip: {
+            showTooltip: true,
+            tooltipMessage: "Hi There 👋!",
+            tooltipBackgroundColor: "black",
+            tooltipTextColor: "white",
+            tooltipFontSize: 16,
+          },
+          customCSS: ``,
+          chatWindow: {
+            showTitle: true,
+            showAgentMessages: true,
+            title: "Frans (AI Recruitment Assistant)",
+            titleAvatarSrc:
+              "/static/img/bot-avatar.jpg",
+            welcomeMessage: "Hello! This is Frans. How can I help you?",
+            errorMessage: "Sorry, I don't think I can help.",
+            backgroundColor: "#424769",
+            backgroundImage: "enter image path or link",
+            height: "600",
+            width: "900",
+            fontSize: 16,
+            starterPrompts: ["Hello!", "Who are you?", "How are you?"],
+            starterPromptFontSize: 15,
+            clearChatOnReload: false,
+            sourceDocsTitle: "Sources:",
+            renderHTML: true,
+            botMessage: {
+              backgroundColor: "#7077A1",
+              textColor: "#ffffff",
+              showAvatar: true,
+              avatarSrc:
+                "/static/img/bot-avatar.jpg",
+            },
+            userMessage: {
+              backgroundColor: "#7077A1",
+              textColor: "#ffffff",
+              showAvatar: true,
+              avatarSrc:
+                "/static/img/user-avatar.jpg",
+            },
+            textInput: {
+              placeholder: "Type your question",
+              backgroundColor: "#ffffff",
+              textColor: "#303235",
+              sendButtonColor: "#F6B17A",
+              maxChars: 220,
+              maxCharsWarningMessage:
+                "You exceeded the characters limit. Please input less than 220 characters.",
+              autoFocus: false,
+              sendMessageSound: true,
+              sendSoundLocation: "send_message.mp3",
+              receiveMessageSound: true,
+              receiveSoundLocation: "receive_message.mp3",
+            },
+            feedback: {
+              color: "#303235",
+            },
+            dateTimeToggle: {
+              date: true,
+              time: true,
+            },
+            footer: {
+              textColor: "#fffff",
+              text: "",
+              company: "",
+              companyLink: "",
+            },
+          },
+        },
+      });
+    </script>
+  </div>
 </section>
 {% include "components/footer.html" %} {% endblock %}
