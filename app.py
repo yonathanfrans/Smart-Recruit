@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash, abort
+from flask import Flask, render_template, redirect, url_for, request, flash, abort, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_login import login_user, logout_user, login_required, current_user
@@ -76,6 +76,41 @@ def predict_job_role(jc):
     prediction = model.predict(X)
 
     return prediction[0]
+
+# API Candidates
+@app.route("/api/candidates", methods=["GET"])
+def api_candidates():
+    if request.headers.get("X-API-KEY") != "SECRET123":
+        abort(401)
+
+    candidates = (
+        db.session.query(User)
+        .join(CandidateProfile)
+        .join(JobClassification)
+        .filter(
+            User.role == "candidate",
+            CandidateProfile.status == "Unemployed"
+        )
+        .all()
+    )
+
+    result = []
+
+    for c in candidates:
+        result.append({
+            "name": f"{c.profile.first_name} {c.profile.last_name}",
+            "job_role": c.job_classification.job_role,
+            "skills": c.job_classification.skills,
+            "education": c.job_classification.education,
+            "experience_years": c.job_classification.experience_years,
+            "social_media": {
+                "github": c.profile.github,
+                "instagram": c.profile.instagram
+            }
+        })
+
+    return jsonify(result)
+
 
 # Routes
 @app.route('/')
