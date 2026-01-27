@@ -6,6 +6,7 @@ from functools import wraps
 from extensions import db, login_manager
 from models import User, CandidateProfile, JobClassification
 from datetime import datetime
+from sqlalchemy import and_
 
 import joblib
 import os
@@ -51,6 +52,7 @@ skills_vectorizer = joblib.load(os.path.join(MODEL_PATH, 'skills_vectorizer.pkl'
 certs_vectorizer = joblib.load(os.path.join(MODEL_PATH, 'certs_vectorizer.pkl'))
 education_map = joblib.load(os.path.join(MODEL_PATH, 'education_map.pkl'))
 
+# Fungsi Prediksi Job Role
 def predict_job_role(jc):
     skills_text = jc.skills or ""
     certs_text = jc.certification or ""
@@ -80,10 +82,19 @@ def predict_job_role(jc):
 # API Candidates
 @app.route("/api/candidates", methods=["GET"])
 def api_candidates():
+    # Simple API Key Auth
     if request.headers.get("X-API-KEY") != "SECRET123":
         abort(401)
 
-    candidates = (
+    # --- Ambil Query Params ---
+    name = request.args.get("name")
+    job_role = request.args.get("job_role")
+    skill = request.args.get("skill")
+    education = request.args.get("education")
+    min_experience = request.args.get("min_experience", type=int)
+
+    # --- Base Query ---
+    query = (
         db.session.query(User)
         .join(CandidateProfile)
         .join(JobClassification)
@@ -91,11 +102,39 @@ def api_candidates():
             User.role == "candidate",
             CandidateProfile.status == "Unemployed"
         )
-        .all()
     )
 
-    result = []
+    # --- Filtering Logic ---
+    if name:
+        query = query.filter(
+            (CandidateProfile.first_name + " " + CandidateProfile.last_name)
+            .ilike(f"%{name}%")
+        )
 
+    if job_role:
+        query = query.filter(
+            JobClassification.job_role.ilike(f"%{job_role}%")
+        )
+
+    if skill:
+        query = query.filter(
+            JobClassification.skills.ilike(f"%{skill}%")
+        )
+
+    if education:
+        query = query.filter(
+            JobClassification.education.ilike(f"%{education}%")
+        )
+
+    if min_experience is not None:
+        query = query.filter(
+            JobClassification.experience_years > min_experience
+        )
+
+    candidates = query.all()
+
+    # --- Serialize Result ---
+    result = []
     for c in candidates:
         result.append({
             "name": f"{c.profile.first_name} {c.profile.last_name}",
@@ -312,6 +351,7 @@ def save_job_role():
         )
         db.session.add(jc)
 
+    # Generate Job Role
     job_role = predict_job_role(jc)
     jc.job_role = job_role
 
