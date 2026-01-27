@@ -44,28 +44,28 @@
             href="/#"
             class="nav-link block py-2 px-3 my-2 rounded hover:text-second-color {% if active_page != None and active_page == 'candidate' %} text-white bg-second-color md:bg-transparent md:text-second-color {% endif %} md:p-0"
             aria-current="page"
-            >Home</a
+            >Beranda</a
           >
         </li>
         <li>
           <a
             href="/#about"
             class="nav-link block py-2 px-3 my-2 rounded md:p-0 hover:text-second-color"
-            >About</a
+            >Tentang Kami</a
           >
         </li>
         <li>
           <a
             href="/#category"
             class="nav-link block py-2 px-3 my-2 rounded md:p-0 hover:text-second-color {% if active_page == 'category' %} text-white bg-second-color md:bg-transparent md:text-second-color {% endif %}"
-            >Category</a
+            >Kategori</a
           >
         </li>
         <li>
           <a
             href="{{url_for('assistant')}}"
             class="nav-link block py-2 px-3 my-2 rounded md:p-0 hover:text-second-color"
-            >Your Assistant</a
+            >Asisten Anda</a
           >
         </li>
         <li>
@@ -76,7 +76,7 @@
             href="{{ url_for('profile') }}"
             class="text-white bg-second-color hover:bg-third-color box-border border border-transparent focus:ring-2 focus:ring-third-color hover:ring-2 hover:ring-third-color shadow-xs font-normal leading-5 rounded-base text-xl px-8 py-3 md:px-9 md:py-3 focus:outline-none ml-2 md:ml-0 cursor-pointer"
           >
-            Profile
+            Hello! {{ current_user.profile.first_name }} 👋
           </a>
 
           {% elif current_user.role == 'recruiter' %}
@@ -85,7 +85,7 @@
             href="{{ url_for('logout') }}"
             class="text-white bg-second-color hover:bg-third-color box-border border border-transparent focus:ring-2 focus:ring-third-color hover:ring-2 hover:ring-third-color shadow-xs font-normal leading-5 rounded-base text-xl px-8 py-3 md:px-9 md:py-3 focus:outline-none ml-2 md:ml-0 cursor-pointer"
           >
-            Logout
+            Keluar
           </a>
 
           {% endif %} {% else %}
@@ -96,7 +96,7 @@
             type="button"
             class="text-white bg-second-color hover:bg-third-color box-border border border-transparent focus:ring-2 focus:ring-third-color hover:ring-2 hover:ring-third-color shadow-xs font-normal leading-5 rounded-base text-xl px-8 py-3 md:px-9 md:py-3 focus:outline-none ml-2 md:ml-0 cursor-pointer"
           >
-            Login
+            Masuk
           </button>
           {% endif %}
         </li>
@@ -121,7 +121,7 @@
       <div
         class="flex items-center justify-around border-b border-default pb-4 md:pb-5"
       >
-        <h3 class="text-lg font-medium text-white">Login to our platform</h3>
+        <h3 class="text-lg font-medium text-white">Masuk ke platform kami</h3>
         <button
           type="button"
           class="text-white bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
@@ -137,7 +137,7 @@
           <label
             for="username"
             class="block mb-2.5 text-sm font-medium text-white"
-            >Your Username</label
+            >Username Anda</label
           >
           <input
             type="text"
@@ -152,7 +152,7 @@
           <label
             for="password"
             class="block mb-2.5 text-sm font-medium text-white"
-            >Your password</label
+            >Password Anda</label
           >
           <input
             type="password"
@@ -167,19 +167,19 @@
           <a
             href="#"
             class="text-sm font-medium text-third-color hover:underline"
-            >Forget Password?</a
+            >Lupa Password?</a
           >
         </div>
         <button
           type="submit"
           class="text-white bg-second-color border border-transparent hover:bg-third-color focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-base px-4 py-2.5 focus:outline-none w-full mb-3"
         >
-          Login to your account
+          Masuk ke akun anda
         </button>
         <div class="text-sm font-medium text-third-color">
-          Not registered?
+          Belum terdaftar?
           <a href="{{url_for('register')}}" class="text-white hover:underline"
-            >Create account</a
+            >Buat akun</a
           >
         </div>
       </form>

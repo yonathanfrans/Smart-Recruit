@@ -41,7 +41,7 @@
             name="person-sharp"
             class="size-6 transition duration-75 group-hover:text-second-color"
           ></ion-icon>
-          <span class="ms-5">Profile Data</span>
+          <span class="ms-5">Data Profil</span>
         </a>
       </li>
       <li>
@@ -53,7 +53,7 @@
             name="business-sharp"
             class="size-6 transition duration-75 group-hover:text-second-color"
           ></ion-icon>
-          <span class="ms-5">Job Role</span>
+          <span class="ms-5">Posisi Pekerjaan</span>
         </a>
       </li>
       <hr class="border border-white mx-auto my-10" />
@@ -66,7 +66,7 @@
             name="home-sharp"
             class="size-6 transition duration-75 group-hover:text-second-color"
           ></ion-icon>
-          <span class="ms-5">Back to Home Page</span>
+          <span class="ms-5">Kembali ke beranda</span>
         </a>
       </li>
       <li>
@@ -78,7 +78,7 @@
             name="log-out-sharp"
             class="size-6 transition duration-75 group-hover:text-second-color"
           ></ion-icon>
-          <span class="ms-5">Logout</span>
+          <span class="ms-5">Keluar</span>
         </a>
       </li>
     </ul>
@@ -91,9 +91,9 @@
   <section id="profileData" class="p-4">
     <!-- title -->
     <div class="font-normal text-center mt-8">
-      <h1 class="text-3xl text-main-color">Profile Data</h1>
+      <h1 class="text-3xl text-main-color">Data Profil</h1>
       <h3 class="text-base text-third-color">
-        Fill in and update your personal details in the form below.
+        Lengkapi dan perbarui data diri Anda pada formulir berikut.
       </h3>
     </div>
     <!-- Form profile data -->
@@ -129,11 +129,11 @@
           Only allowed (PNG, JPG, or JPEG).
         </p>
         <!-- input status -->
-        <div class="w-full">
+        <div class="w-full mt-2">
           <label
             for="status"
             class="block mb-2.5 text-sm font-medium text-second-color"
-            >Select your status
+            >Apakah anda sedang mencari pekerjaan?
           </label>
           <select
             id="status"
@@ -158,7 +158,7 @@
             <label
               for="first_name"
               class="block mb-2.5 text-sm font-medium text-second-color"
-              >First name</label
+              >Nama depan</label
             >
             <input
               type="text"
@@ -175,7 +175,7 @@
             <label
               for="last_name"
               class="block mb-2.5 text-sm font-medium text-second-color"
-              >Last name</label
+              >Nama belakang</label
             >
             <input
               type="text"
@@ -192,7 +192,7 @@
             <label
               for="birthdate"
               class="block mb-2.5 text-sm font-medium text-second-color"
-              >Birthdate</label
+              >Tanggal lahir</label
             >
             <input
               type="date"
@@ -225,7 +225,7 @@
             <label
               for="address"
               class="block mb-2.5 text-sm font-medium text-second-color"
-              >Address</label
+              >Alamat</label
             >
             <textarea
               id="address"
@@ -248,7 +248,7 @@
             <label
               for="phone_number"
               class="block mb-2.5 text-sm font-medium text-second-color"
-              >Phone number</label
+              >Nomor telepon</label
             >
             <div class="relative">
               <div
@@ -367,7 +367,7 @@
         type="submit"
         class="size-max text-white bg-second-color box-border border border-transparent hover:bg-third-color focus:ring-4 focus:ring-third-color shadow-xs font-medium leading-5 rounded-base text-base px-7 py-2.5 mx-auto my-2 mt-10 focus:outline-none"
       >
-        Save
+        Simpan
       </button>
     </form>
   </section>
@@ -376,9 +376,10 @@
   <section id="jobRole" class="p-4 mt-20">
     <!-- title -->
     <div class="font-normal text-center mt-8">
-      <h1 class="text-3xl text-main-color">Job Role</h1>
+      <h1 class="text-3xl text-main-color">Posisi Pekerjaan</h1>
       <h3 class="text-base text-third-color">
-        Fill out this form to find out your job role.
+        Isi formulir berikut untuk mengetahui peluang posisi pekerjaan yang sesuai 
+        <br>berdasarkan analisis Machine Learning terhadap data kualifikasi anda
       </h3>
     </div>
     <!-- Form job role -->
@@ -468,11 +469,11 @@
             {% if job.certification_files %}
             <div class="text-sm text-main-color">
               <p class="font-medium mb-1">Uploaded Certifications:</p>
-              <ol class="list-decimal list-inside">
+              <ul class="list-disc list-inside">
                 {% for file in job.certification_files.split(',') %}
                 <li class="py-1">{{ file }}</li>
                 {% endfor %}
-              </ol>
+              </ul>
             </div>
             {% endif %}
           </div>
@@ -614,7 +615,7 @@
 
         <!-- Job Role -->
         <h3 class="my-3 text-lg text-second-color">
-          Job Role: <span class="text-fourth-color">{{ job.job_role if job and job.job_role else 'Not generated yet' }}</span>
+          Peluang Posisi Pekerjaan: <span class="text-fourth-color">{{ job.job_role if job and job.job_role else 'Not generated yet' }}</span>
         </h3>
       </div>
       <!-- Button Submit -->
@@ -622,7 +623,7 @@
         type="submit"
         class="w-max text-white bg-second-color box-border border border-transparent hover:bg-third-color focus:ring-4 focus:ring-third-color shadow-xs font-medium leading-5 rounded-base text-base px-7 py-2.5 mx-auto my-2 mt-10 focus:outline-none"
       >
-        Submit
+        Simpan
       </button>
     </form>
   </section>

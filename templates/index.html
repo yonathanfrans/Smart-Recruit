@@ -8,15 +8,14 @@
   <div class="px-4 md:ml-5 mx-auto max-w-screen-7xl text-start py-30 lg:py-40">
     <div class="text-start max-w-3xl">
       <h1
-        class="mb-6 text-4xl font-bold tracking-tighter text-white md:text-5xl lg:text-6xl"
+        class="mb-6 text-3xl font-bold tracking-tighter text-white md:text-5xl lg:text-6xl"
       >
-        Discover the Right Candidate <br />
-        with AI Intelligence
+        Temukan Kandidat TI yang Tepat dengan Kecerdasan Buatan
       </h1>
       <p class="mb-8 text-base font-normal text-white md:text-xl">
-        Smart Recruit analyzes and classifies candidates based on skills,
-        experience, and professional background with high accuracy and
-        efficiency.
+        Smart Recruit menganalisis dan mengklasifikasikan Kandidat TI
+        berdasarkan keahlian, pengalaman kerja, dan latar belakang profesional
+        dengan akurasi dan efisiensi yang tinggi.
       </p>
     </div>
     <div
@@ -26,14 +25,14 @@
         href="{{url_for('assistant')}}"
         class="inline-flex items-center justify-center text-white bg-second-color hover:bg-third-color box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium rounded-base text-base px-5 py-3 focus:outline-none"
       >
-        Find Candidate
+        Temukan Kandidat
         <ion-icon name="people-circle-outline" class="ml-2 text-xl"></ion-icon>
       </a>
       <a
         href="#about"
-        class="text-second-color bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-base px-5 py-4 focus:outline-none"
+        class="text-second-color text-center bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-base px-5 py-4 focus:outline-none"
       >
-        Learn More
+        Pelajari lebih lanjut
       </a>
     </div>
   </div>
@@ -41,29 +40,34 @@
 
 <!-- About -->
 <section id="about" class="mt-20 mb-10 mx-auto">
-  <h1 class="font-normal text-3xl text-center text-main-color">About Us</h1>
+  <h1 class="font-normal text-3xl text-center text-main-color">Tentang Kami</h1>
 
   <div
     class="flex flex-wrap flex-row justify-center items-center mb-10 mt-10 px-6 md:justify-around md:mx-7 md:px-0"
   >
     <div class="w-2xl order-2 md:order-0">
       <p class="text-justify leading-relaxed text-base">
-        Smart Recruit is an AI-powered recruitment platform designed to help
-        companies identify the right tech talent quickly and accurately.
-        Traditional recruitment relies heavily on manual screening, which can be
-        time-consuming, subjective, and inefficient especially when evaluating
-        candidates with similar backgrounds.
+        Smart Recruit merupakan platform rekrutmen berbasis kecerdasan buatan
+        yang dirancang untuk membantu perusahaan dalam mengidentifikasi kandidat
+        teknologi informasi secara cepat dan akurat. Pada proses rekrutmen
+        konvensional, seleksi kandidat masih banyak dilakukan secara manual,
+        sehingga memerlukan waktu yang lama, bersifat subjektif, dan kurang
+        efisien terutama ketika menghadapi kandidat dengan latar belakang yang
+        serupa.
         <br /><br />
-        Smart Recruit transforms this process through intelligent
-        classification. By analyzing a candidate’s skills, certifications,
-        education, experience, and projects, the system predicts the most
-        suitable job role such as Data Scientist, Cybersecurity Engineer, or AI
-        Engineer.
+        Melalui penerapan teknologi kecerdasan buatan, Smart Recruit
+        menghadirkan mekanisme klasifikasi kandidat secara otomatis. Sistem ini
+        menganalisis data kandidat yang meliputi keahlian, sertifikasi, tingkat
+        pendidikan, pengalaman kerja, serta proyek yang pernah dikerjakan untuk
+        memprediksi peluang peran profesi yang paling sesuai, yaitu Data
+        Scientist, Cybersecurity Engineer, dan AI Engineer.
         <br /><br />
-        Our mission is to support recruiters in making smarter and more
-        objective hiring decisions. With Smart Recruit, companies can streamline
-        the candidate evaluation process, reduce screening time, and increase
-        the accuracy of hiring all through the power of data-driven insights.
+        Tujuan utama pengembangan Smart Recruit adalah untuk mendukung recruiter
+        dalam mengambil keputusan rekrutmen yang lebih objektif dan berbasis
+        data. Dengan sistem ini, proses evaluasi kandidat dapat dilakukan secara
+        lebih terstruktur, waktu seleksi dapat dipersingkat, serta akurasi dalam
+        penentuan kandidat yang sesuai dengan kebutuhan perusahaan dapat
+        ditingkatkan.
       </p>
     </div>
     <div class="text-center md:mr-10">
@@ -78,7 +82,7 @@
 
 <!-- Category -->
 <section id="category" class="mt-40 mb-30 mx-auto">
-  <h1 class="font-normal text-3xl text-center text-main-color">Category</h1>
+  <h1 class="font-normal text-3xl text-center text-main-color">Kategori</h1>
 
   <div
     class="flex flex-wrap flex-row justify-center items-center gap-x-30 gap-y-20 mb-10 mt-10 px-6 md:mx-7 md:px-0"
@@ -104,7 +108,7 @@
           href="{{url_for('candidate', category='data-science')}}"
           class="inline-flex items-center text-white bg-second-color border border-transparent hover:bg-third-color focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
         >
-          View More
+          Lihat Kandidat
           <ion-icon name="eye-outline" class="size-4 ms-2 -me-0.5"></ion-icon>
         </a>
       </div>
@@ -131,7 +135,7 @@
           href="{{url_for('candidate', category='ai')}}"
           class="inline-flex items-center text-white bg-second-color border border-transparent hover:bg-third-color focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
         >
-          View More
+          Lihat Kandidat
           <ion-icon name="eye-outline" class="size-4 ms-2 -me-0.5"></ion-icon>
         </a>
       </div>
@@ -158,7 +162,7 @@
           href="{{url_for('candidate', category='cybersecurity')}}"
           class="inline-flex items-center text-white bg-second-color border border-transparent hover:bg-third-color focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
         >
-          View More
+          Lihat Kandidat
           <ion-icon name="eye-outline" class="size-4 ms-2 -me-0.5"></ion-icon>
         </a>
       </div>
