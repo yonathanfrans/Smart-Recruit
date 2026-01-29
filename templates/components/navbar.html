@@ -9,7 +9,7 @@
     <!-- logo -->
     <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
       <img
-        src="{{ url_for('static',filename='img/logo.png') }}"
+        src="{{ url_for('static',filename='img/logo.webp') }}"
         class="h-8 rounded-full"
         alt="Smart Recruit Logo"
       />
@@ -85,7 +85,7 @@
             href="{{ url_for('logout') }}"
             class="text-white bg-second-color hover:bg-third-color box-border border border-transparent focus:ring-2 focus:ring-third-color hover:ring-2 hover:ring-third-color shadow-xs font-normal leading-5 rounded-base text-xl px-8 py-3 md:px-9 md:py-3 focus:outline-none ml-2 md:ml-0 cursor-pointer"
           >
-            Keluar
+            Logout
           </a>
 
           {% endif %} {% else %}
@@ -96,7 +96,7 @@
             type="button"
             class="text-white bg-second-color hover:bg-third-color box-border border border-transparent focus:ring-2 focus:ring-third-color hover:ring-2 hover:ring-third-color shadow-xs font-normal leading-5 rounded-base text-xl px-8 py-3 md:px-9 md:py-3 focus:outline-none ml-2 md:ml-0 cursor-pointer"
           >
-            Masuk
+            Login
           </button>
           {% endif %}
         </li>
@@ -121,7 +121,7 @@
       <div
         class="flex items-center justify-around border-b border-default pb-4 md:pb-5"
       >
-        <h3 class="text-lg font-medium text-white">Masuk ke platform kami</h3>
+        <h3 class="text-lg font-medium text-white">Login ke platform kami</h3>
         <button
           type="button"
           class="text-white bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
@@ -174,15 +174,70 @@
           type="submit"
           class="text-white bg-second-color border border-transparent hover:bg-third-color focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-base px-4 py-2.5 focus:outline-none w-full mb-3"
         >
-          Masuk ke akun anda
+          Login ke akun anda
         </button>
+        <!-- checking user accounts -->
         <div class="text-sm font-medium text-third-color">
-          Belum terdaftar?
+          Belum terdaftar kandidat?
           <a href="{{url_for('register')}}" class="text-white hover:underline"
             >Buat akun</a
           >
         </div>
+        <div class="text-sm font-medium text-third-color mt-2">
+          Login sebagai recruiter?
+          <span
+            data-modal-target="popup-modal"
+            data-modal-toggle="popup-modal"
+            class="text-white hover:underline cursor-pointer"
+            >Klik disini</span
+          >
+        </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Recruiter -->
+<div
+  id="popup-modal"
+  tabindex="-1"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+>
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <div
+      class="relative bg-neutral-primary-soft border border-main-color rounded-base shadow-sm p-4 md:p-6"
+    >
+      <button
+        type="button"
+        class="absolute top-3 end-2.5 text-main-color bg-transparent hover:bg-main-color hover:text-white rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+        data-modal-hide="popup-modal"
+      >
+        <ion-icon class="size-5" name="close-outline"></ion-icon>
+        <span class="sr-only">Close modal</span>
+      </button>
+      <div class="p-4 md:p-5 text-center">
+        <ion-icon
+          name="alert-circle-outline"
+          class="mx-auto mb-4 text-fg-disabled size-12"
+        ></ion-icon>
+        <p class="mb-4 text-body leading-relaxed">
+          Untuk menjaga keamanan data kandidat dan memastikan validitas
+          perusahaan, pendaftaran akun recruiter tidak dilakukan secara
+          langsung.
+        </p>
+        <p class="mb-6 text-body">
+          Silakan menghubungi admin melalui email resmi dengan melampirkan surat
+          kuasa perusahaan.
+        </p>
+        <div class="flex items-center space-x-4 justify-center">
+          <a
+            href="mailto:yonatanfrans07@gmail.com?subject=Akun%20Recruiter%20SmartRecruit"
+            class="text-white bg-second-color box-border border border-transparent hover:bg-main-color focus:ring-4 focus:ring-danger-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+          >
+            Hubungi Admin
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
