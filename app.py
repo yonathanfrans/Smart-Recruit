@@ -7,6 +7,8 @@ from extensions import db, login_manager
 from models import User, CandidateProfile, JobClassification
 from datetime import datetime
 from sqlalchemy import and_
+from flask_migrate import Migrate
+from constants import get_all_skills_sorted, EDUCATION_OPTIONS, EDUCATION_LABEL_MAP
 
 import joblib
 import os
@@ -19,11 +21,16 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000  # 16MB
 # Config DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///smartrecruit.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Config Folder Upload
 app.config['UPLOAD_FOLDER'] = 'static/uploads/profile'
+app.config['UPLOAD_CV_FOLDER'] = 'static/uploads/cv'
+app.config['UPLOAD_CERTIFICATION_FOLDER'] = 'static/uploads/certifications'
 
 db.init_app(app)
 login_manager.init_app(app)
 login_manager.login_view = None
+
+migrate = Migrate(app, db)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -92,6 +99,7 @@ def api_candidates():
     skill = request.args.get("skill")
     education = request.args.get("education")
     min_experience = request.args.get("min_experience", type=int)
+    gender = request.args.get("gender")
 
     # --- Base Query ---
     query = (
@@ -107,8 +115,7 @@ def api_candidates():
     # --- Filtering Logic ---
     if name:
         query = query.filter(
-            (CandidateProfile.first_name + " " + CandidateProfile.last_name)
-            .ilike(f"%{name}%")
+            (CandidateProfile.first_name + " " + CandidateProfile.last_name).ilike(f"%{name}%")
         )
 
     if job_role:
@@ -131,6 +138,12 @@ def api_candidates():
             JobClassification.experience_years > min_experience
         )
 
+    if gender:
+        query = query.filter(
+            CandidateProfile.gender.ilike(gender)
+        )
+
+
     candidates = query.all()
 
     # --- Serialize Result ---
@@ -138,6 +151,7 @@ def api_candidates():
     for c in candidates:
         result.append({
             "name": f"{c.profile.first_name} {c.profile.last_name}",
+            "gender": c.profile.gender,
             "job_role": c.job_classification.job_role,
             "skills": c.job_classification.skills,
             "education": c.job_classification.education,
@@ -169,6 +183,7 @@ def candidate():
     category = request.args.get("category")
     search = request.args.get("search")
     roles = request.args.getlist("role")
+    genders = request.args.getlist("gender")
 
     CATEGORY_MAP = {
     'data-science': 'Data Scientist',
@@ -207,6 +222,11 @@ def candidate():
             JobClassification.job_role.in_(roles)
         )
 
+    if genders:
+        query = query.filter(
+            CandidateProfile.gender.in_(genders)
+        )
+
     candidates = query.all()
 
     return render_template(
@@ -235,6 +255,7 @@ def candidate_detail(username):
     return render_template(
         "detail-candidate.html", 
         candidate=candidate,
+        EDUCATION_LABEL_MAP=EDUCATION_LABEL_MAP,
         active_page="category"
     )
 
@@ -243,12 +264,25 @@ def candidate_detail(username):
 @login_required
 @role_required('candidate')
 def profile():
+    # List of skills
+    all_skills = get_all_skills_sorted()
+
+    selected_skills = []
+    if current_user.job_classification and current_user.job_classification.skills:
+        selected_skills = [
+            s.strip()
+            for s in current_user.job_classification.skills.split(',')
+        ]
+
     # Get tampilkan data
     return render_template(
         "profile.html", 
         profile=current_user.profile,
         job=current_user.job_classification,
-        user=current_user
+        user=current_user,
+        skills=all_skills,
+        selected_skills=selected_skills,
+        EDUCATION_OPTIONS=EDUCATION_OPTIONS
     )
 
 @app.route("/profile/update", methods=["POST"])
@@ -266,27 +300,37 @@ def update_profile():
         request.form['birthdate'], '%Y-%m-%d'
     )
     profile.status = request.form.get('status')
+    profile.gender = request.form.get('gender')
     profile.address = request.form.get('address')
     profile.phone_number = request.form['phone_number']
     profile.email = request.form['email']
     profile.instagram = request.form['instagram']
     profile.github = request.form['github']
 
-    # image upload
-    image = request.files.get('image_profile')
+    # upload image
+    image = request.files.get('image')
     if image and image.filename != "":
         filename = secure_filename(image.filename)
         upload_path = os.path.join(
-            app.root_path,
-            'static/uploads/profile',
+            app.config['UPLOAD_FOLDER'],
             filename
         )
-
-        os.makedirs(os.path.dirname(upload_path), exist_ok=True)
         image.save(upload_path)
 
         profile.image = filename
         
+    # upload cv
+    cv = request.files.get('cv_file')
+    if cv and cv.filename != "":
+        filename = secure_filename(cv.filename)
+        cv_path = os.path.join(
+            app.config['UPLOAD_CV_FOLDER'], 
+            filename
+        )
+        cv.save(cv_path)
+
+        profile.cv_file = filename
+
     db.session.commit()
     flash("Profile successfully updated", "success")
 
@@ -299,8 +343,18 @@ def save_job_role():
     jc = current_user.job_classification
 
     # ambil data form
-    skills = request.form['skills']
-    education = request.form['education']
+    skills_list = request.form.getlist('skills')
+    # Hilangkan duplikat dan jaga urutan
+    skills_list = list(dict.fromkeys(skills_list))
+
+    # Validasi minimal 2 skill
+    if len(skills_list) < 2:
+        flash('Pilih minimal 2 skill untuk melanjutkan', 'warning')
+        return redirect(url_for('profile'))
+
+    skills = ", ".join(skills_list)
+
+    education = request.form.get('education')
     certifications = request.form['certifications']
     experience = request.form.get('experience')
     experience_years = int(request.form.get('experience_years', 0))
@@ -319,8 +373,7 @@ def save_job_role():
             
             filename = secure_filename(file.filename)
             file.save(os.path.join(
-                app.root_path,
-                'static/uploads/certifications', 
+                app.config['UPLOAD_CERTIFICATION_FOLDER'], 
                 filename
                 ))
             filenames.append(filename)

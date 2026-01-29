@@ -4,7 +4,7 @@
 <section class="mt-30 mb-10 mx-auto">
   <!-- Header Profile -->
   <div
-    class="flex flex-row flex-wrap items-center justify-around m-2 py-3 mb-10"
+    class="flex flex-row flex-wrap items-center justify-around m-2 py-3 mb-10 gap-y-5"
   >
     <!-- Profile Candidate -->
     <img
@@ -12,7 +12,7 @@
       src="{% if candidate.profile.image %}
               {{ url_for('static', filename='uploads/profile/' ~ candidate.profile.image) }}
               {% else %}
-              {{ url_for('static', filename='img/user-profile.jpg') }}
+              {{ url_for('static', filename='img/user-profile.webp') }}
              {% endif %}"
       alt="Rounded profile"
     />
@@ -21,8 +21,8 @@
       <h2 class="font-bold text-3xl text-main-color">
         {{ candidate.profile.first_name }} {{ candidate.profile.last_name }}
       </h2>
-      <span class="font-medium text-2xl text-second-color"
-        >Looking for a job as a
+      <span class="font-medium text-2xl text-center text-second-color"
+        >Mencari pekerjaan sebagai
         <span class="font-semibold text-fourth-color"
           >{{ candidate.job_classification.job_role }}</span
         ></span
@@ -59,38 +59,72 @@
     >
       <!-- title -->
       <div class="flex flex-wrap flex-col justify-start mx-3">
-        <h2 class="font-semibold text-lg text-main-color">My Information</h2>
-        <h3 class="font-light text-sm text-third-color">Personal details</h3>
+        <h2 class="font-semibold text-lg text-main-color">Informasi Saya</h2>
+        <h3 class="font-light text-sm text-third-color">Rincian pribadi</h3>
       </div>
       <hr class="my-3 text-third-color" />
       <!-- content -->
       <div class="grid grid-cols-2 my-4 mx-3 gap-y-8 gap-x-5 md:gap-x-0">
         <!-- Birthdate -->
         <div class="flex flex-wrap flex-col text-sm">
-          <h3 class="text-third-color">Birthdate</h3>
+          <h3 class="text-third-color">Tanggal lahir</h3>
           <h4 class="text-main-color">{{ candidate.profile.birthdate }}</h4>
         </div>
         <!-- Education -->
         <div class="flex flex-wrap flex-col text-sm">
-          <h3 class="text-third-color">Education</h3>
+          <h3 class="text-third-color">Pendidikan</h3>
           <h4 class="text-main-color">
-            {{ candidate.job_classification.education }}
+            {{ EDUCATION_LABEL_MAP.get(candidate.job_classification.education,
+            candidate.job_classification.education) }}
           </h4>
         </div>
         <!-- Email -->
         <div class="flex flex-wrap flex-col text-sm">
-          <h3 class="text-third-color">Email Address</h3>
-          <h4 class="text-main-color">{{ candidate.profile.email }}</h4>
+          <h3 class="text-third-color">Jenis Kelamin</h3>
+          {% if candidate.profile.gender == 'Male' %}
+          <h4 class="text-main-color">Laki-laki</h4>
+          {% elif candidate.profile.gender == 'Female' %}
+          <h4 class="text-main-color">Perempuan</h4>
+          {% else %}
+          <h4 class="text-main-color">Belum dipilih</h4>
+          {% endif %}
         </div>
         <!-- Phone Number -->
         <div class="flex flex-wrap flex-col text-sm">
-          <h3 class="text-third-color">Phone Number</h3>
+          <h3 class="text-third-color">Nomor Telepon</h3>
           <h4 class="text-main-color">{{ candidate.profile.phone_number }}</h4>
         </div>
         <!-- address -->
         <div class="flex flex-wrap flex-col text-sm col-span-2">
-          <h3 class="text-third-color">Address</h3>
+          <h3 class="text-third-color">Alamat</h3>
           <p class="text-main-color">{{ candidate.profile.address }}</p>
+        </div>
+        <!-- Curriculum Vitae -->
+        <div class="flex flex-wrap flex-col text-sm col-span-2">
+          <h3 class="text-third-color">Curriculum Vitae</h3>
+          {% if candidate.profile.cv_file %}
+          <div class="flex justify-between border-2 border-gray-200 p-2">
+            <div class="flex items-center gap-x-2">
+              <ion-icon
+                name="attach-outline"
+                class="size-5 text-third-color"
+              ></ion-icon>
+              <p class="text-main-color">{{ candidate.profile.cv_file }}</p>
+            </div>
+            <div
+              class="flex items-center gap-x-2 cursor-pointer text-third-color hover:text-main-color hover:underline"
+            >
+              <ion-icon name="eye-outline" class="size-5"></ion-icon>
+              <a
+                href="{{ url_for('static', filename='uploads/cv/' ~ candidate.profile.cv_file) }}"
+                target="_blank"
+                >View</a
+              >
+            </div>
+          </div>
+          {% else %}
+          <p class="text-sm text-third-color">CV belum diunggah.</p>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -102,10 +136,10 @@
       <!-- title -->
       <div class="flex flex-wrap flex-col justify-start mx-3">
         <h2 class="font-semibold text-lg text-main-color">
-          My Skills & Projects
+          Keahlian & Proyek Saya
         </h2>
         <h3 class="font-light text-sm text-third-color">
-          Hard skills / Technical skills and projects
+          Keahlian teknis dan proyek
         </h3>
       </div>
       <hr class="my-3 text-third-color" />
@@ -113,17 +147,24 @@
       <div class="flex flex-col flex-wrap gap-y-8 my-4 mx-3">
         <!-- Skills -->
         <div class="flex flex-wrap flex-col text-sm">
-          <h3 class="text-third-color">My Skills</h3>
+          <h3 class="text-third-color">Keahlian Saya</h3>
           <p class="text-main-color">
             {{ candidate.job_classification.skills }}
           </p>
         </div>
         <!-- Projects -->
         <div class="flex flex-wrap flex-col text-sm">
-          <h3 class="text-third-color">My Projects</h3>
-          <p class="text-main-color">
-            {{ candidate.job_classification.projects }}
-          </p>
+          <h3 class="text-third-color">Proyek Saya</h3>
+          {% if candidate.job_classification.projects %}
+          <ul class="list-none ms-4 text-main-color space-y-1">
+            {% for line in candidate.job_classification.projects.split('\n') %}
+            {% if line.strip() %}
+            <li>{{ line }}</li>
+            {% endif %} {% endfor %}
+          </ul>
+          {% else %}
+          <p class="text-third-color">Tidak ada data project.</p>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -135,10 +176,10 @@
       <!-- title -->
       <div class="flex flex-wrap flex-col justify-start mx-3">
         <h2 class="font-semibold text-lg text-main-color">
-          My Experience & Certifications
+          Pengalaman & Sertifikasi Saya
         </h2>
         <h3 class="font-light text-sm text-third-color">
-          Experience and certifications acquired so far
+          Pengalaman dan sertifikasi yang telah diperoleh sejauh ini
         </h3>
       </div>
       <hr class="my-3 text-third-color" />
@@ -146,31 +187,31 @@
       <div class="flex flex-col flex-wrap gap-y-5 my-4 mx-3">
         <!-- Experience Years -->
         <div class="flex flex-wrap flex-col text-sm">
-          <h3 class="text-third-color">Experience</h3>
+          <h3 class="text-third-color">Pengalaman Kerja</h3>
           <span class="text-main-color"
-            >{{ candidate.job_classification.experience_years }} years</span
+            >{{ candidate.job_classification.experience_years }} tahun</span
           >
         </div>
         <!-- Detail Experience-->
         <div class="flex flex-wrap flex-col text-sm">
-          <h3 class="text-third-color">Detail Experience</h3>
+          <h3 class="text-third-color">Rincian Pengalaman Kerja</h3>
           <p class="text-main-color">
             {{ candidate.job_classification.experience }}
           </p>
         </div>
         <!-- Certifcations -->
         <div class="flex flex-wrap flex-col text-sm">
-          <h3 class="text-third-color">My Certifications</h3>
+          <h3 class="text-third-color">Sertifikat Saya</h3>
           <p class="text-main-color">
             {{ candidate.job_classification.certification }}
           </p>
         </div>
         <!-- File Certifcations -->
         <div class="flex flex-wrap flex-col text-sm">
-          <h3 class="text-third-color">File Certifications</h3>
+          <h3 class="text-third-color">File Sertifikat</h3>
           {% if candidate.job_classification.certification_files %} {% for file
           in candidate.job_classification.certification_files.split(',') %}
-          <div class="flex justify-between border-2 border-gray-200 p-2">
+          <div class="flex flex-row justify-between border-2 border-gray-200 p-2">
             <div class="flex items-center gap-x-2">
               <ion-icon
                 name="attach-outline"
@@ -190,9 +231,7 @@
             </div>
           </div>
           {% endfor %} {% else %}
-          <p class="text-sm text-third-color">
-            No certification files uploaded.
-          </p>
+          <p class="text-sm text-third-color">Sertifikat belum diunggah.</p>
           {% endif %}
         </div>
       </div>
